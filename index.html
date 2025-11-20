@@ -299,13 +299,14 @@
         }
         
         .payslip-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 25px;
-            margin: -30px -30px 25px -30px;
-            border-radius: 0;
-        }
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    padding: 15px 20px; /* Reduced padding */
+    margin: -20px -20px 15px -20px; /* Less margin */
+    border-radius: 0;
+    font-size: 1rem; /* Smaller font */
+}
         
         @media (min-width: 768px) {
             .payslip-header {
@@ -315,9 +316,9 @@
         }
         
         .payslip-header h2 {
-            margin-bottom: 8px;
-            font-size: 22px;
-        }
+    margin-bottom: 5px;
+    font-size: 1.5rem; /* Smaller */
+}
         
         @media (min-width: 768px) {
             .payslip-header h2 {
@@ -332,8 +333,8 @@
         }
         
         .payslip-header h3 {
-            margin-top: 18px;
-            font-size: 18px;
+            margin-top: 10px;
+            font-size: 1.2rem;
             border-top: 1px solid rgba(255,255,255,0.3);
             padding-top: 18px;
         }
@@ -452,7 +453,7 @@
             .payslip {
                 border: none;
                 padding: 20px;
-                margin: 0;
+                margin: 15px auto;
                 max-width: 100%;
             }
             .modal-body {
@@ -1117,29 +1118,26 @@
         
         // Quick download from card
         function quickDownloadPDF(index) {
-            const slip = payslips[index];
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = generatePayslipHTML(slip);
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.left = '-9999px';
-            document.body.appendChild(tempDiv);
-            
-            const opt = {
-                margin: [10, 10, 10, 10],
-                filename: `${slip.employee.name}_${slip.monthName}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2,
-                    useCORS: true,
-                    letterRendering: true
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            html2pdf().set(opt).from(tempDiv.firstChild).save().then(() => {
-                document.body.removeChild(tempDiv);
-            });
-        }
+    const slip = payslips[index];
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = generatePayslipHTML(slip);
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    document.body.appendChild(tempDiv);
+
+    const opt = {
+        margin: [5, 5, 5, 5],
+        filename: `${slip.employee.name}_${slip.monthName}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(tempDiv.firstChild).save().then(() => {
+        document.body.removeChild(tempDiv);
+    });
+}
+
         
         // Delete payslip
         function deletePayslip(index) {
