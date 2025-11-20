@@ -177,7 +177,65 @@
         @media (min-width: 768px) { .alert { padding: 15px; font-size: 14px; } }
         .alert-success { background: #c6f6d5; color: #22543d; }
         .alert-info    { background: #bee3f8; color: #2c5282; }
-        /* Complete Mobile Fix - Add before closing </style> tag */
+        @media (max-width: 767px) {
+          .calc-mode {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            gap: 10px;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .calc-mode label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: normal;
+            width: 100%;
+            font-size: 15px;
+            padding: 5px 0;
+            word-break: break-word;
+          }
+          #generate .form-group,
+          .tab-content .form-group {
+            width: 100% !important;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          #generate form input,
+          #generate form select,
+          #generate form textarea {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            font-size: 15px;
+          }
+          #generate form label {
+            width: 100%;
+            word-break: break-word;
+            margin-bottom: 8px;
+          }
+          #generate .btn {
+            width: 100%;
+            margin: 7px 0;
+          }
+        }
+        @media print {
+            body { background: white; padding: 0;}
+            .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
+            .tabs, .btn, .card-actions, .modal-header { display: none !important; }
+            .payslip { border: none; padding: 15px; margin: 0; max-width: 100%; page-break-inside: avoid; font-size: 11px; }
+            .payslip-header { padding: 12px; margin: -15px -15px 10px -15px;}
+            .payslip-footer { padding: 10px; margin: 10px -15px -15px -15px;}
+            .modal-body { padding: 0;}
+            .payslip-table td, .payslip-table th { padding: 5px 6px; font-size: 10px;}
+            .net-salary-box { margin: 10px 0; padding: 10px;}
+        }
+
+/* Complete Mobile Fix - Add before closing </style> tag */
 @media (max-width: 767px) {
   /* Fix container padding on mobile */
   .container {
@@ -288,17 +346,6 @@
   }
 }
 
-        @media print {
-            body { background: white; padding: 0;}
-            .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
-            .tabs, .btn, .card-actions, .modal-header { display: none !important; }
-            .payslip { border: none; padding: 15px; margin: 0; max-width: 100%; page-break-inside: avoid; font-size: 11px; }
-            .payslip-header { padding: 12px; margin: -15px -15px 10px -15px;}
-            .payslip-footer { padding: 10px; margin: 10px -15px -15px -15px;}
-            .modal-body { padding: 0;}
-            .payslip-table td, .payslip-table th { padding: 5px 6px; font-size: 10px;}
-            .net-salary-box { margin: 10px 0; padding: 10px;}
-        }
     </style>
 </head>
 <body>
