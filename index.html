@@ -637,15 +637,13 @@
     // Add employee
     document.getElementById('employeeForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    
-    // ADD THESE LINES FIRST (before creating employee object)
+
     const companyIndex = document.getElementById('empCompany').value;
     if (companyIndex === '') {
         alert('Please select a company for this employee');
         return;
     }
-    
-    // NOW REPLACE THE EMPLOYEE OBJECT WITH THIS
+
     const employee = {
         id: document.getElementById('empId').value,
         name: document.getElementById('empName').value,
@@ -661,8 +659,7 @@
         esi: document.getElementById('empESI').value || '',
         bank: document.getElementById('empBank').value || ''
     };
-    
-    // THE REST STAYS THE SAME
+
     if (editingEmployeeIndex !== null) {
         employees[editingEmployeeIndex] = employee;
         editingEmployeeIndex = null;
@@ -672,11 +669,12 @@
         employees.push(employee);
         alert('✅ Employee added successfully!');
     }
-    
+
     localStorage.setItem('employees', JSON.stringify(employees));
     this.reset();
     displayEmployees();
 });
+
 
 
     function editEmployee(index) {
