@@ -502,6 +502,7 @@
     </div>
 <script>
     // Data storage/setup
+    let editingEmployeeIndex = null;
     let editingCompanyIndex = null;
     let companies = JSON.parse(localStorage.getItem('companies')) || [];
     let employees = JSON.parse(localStorage.getItem('employees')) || [];
@@ -612,28 +613,58 @@
 
     // Add employee
     document.getElementById('employeeForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const employee = {
-            id: document.getElementById('empId').value,
-            name: document.getElementById('empName').value,
-            doj: document.getElementById('empDOJ').value,
-            designation: document.getElementById('empDesignation').value,
-            department: document.getElementById('empDepartment').value,
-            basicSalary: parseFloat(document.getElementById('empSalary').value),
-            pan: document.getElementById('empPAN').value || '',
-            epf: document.getElementById('empEPF').value || '',
-            uan: document.getElementById('empUAN').value || '',
-            esi: document.getElementById('empESI').value || '',
-            bank: document.getElementById('empBank').value || ''
-        };
+    e.preventDefault();
+    
+    const employee = {
+        id: document.getElementById('empId').value,
+        name: document.getElementById('empName').value,
+        doj: document.getElementById('empDOJ').value,
+        designation: document.getElementById('empDesignation').value,
+        department: document.getElementById('empDepartment').value,
+        basicSalary: parseFloat(document.getElementById('empSalary').value),
+        pan: document.getElementById('empPAN').value || '',
+        epf: document.getElementById('empEPF').value || '',
+        uan: document.getElementById('empUAN').value || '',
+        esi: document.getElementById('empESI').value || '',
+        bank: document.getElementById('empBank').value || ''
+    };
+    
+    if (editingEmployeeIndex !== null) {
+        employees[editingEmployeeIndex] = employee;
+        editingEmployeeIndex = null;
+        document.querySelector('#employeeForm button[type="submit"]').textContent = '➕ Add Employee';
+        alert('✅ Employee updated successfully!');
+    } else {
         employees.push(employee);
-        localStorage.setItem('employees', JSON.stringify(employees));
-        this.reset();
-        displayEmployees();
         alert('✅ Employee added successfully!');
-    });
+    }
+    
+    localStorage.setItem('employees', JSON.stringify(employees));
+    this.reset();
+    displayEmployees();
+});
 
-    function displayEmployees() {
+    function editEmployee(index) {
+    editingEmployeeIndex = index;
+    const emp = employees[index];
+    
+    document.getElementById('empName').value = emp.name;
+    document.getElementById('empId').value = emp.id;
+    document.getElementById('empDOJ').value = emp.doj;
+    document.getElementById('empDesignation').value = emp.designation;
+    document.getElementById('empDepartment').value = emp.department;
+    document.getElementById('empSalary').value = emp.basicSalary;
+    document.getElementById('empPAN').value = emp.pan || '';
+    document.getElementById('empEPF').value = emp.epf || '';
+    document.getElementById('empUAN').value = emp.uan || '';
+    document.getElementById('empESI').value = emp.esi || '';
+    document.getElementById('empBank').value = emp.bank || '';
+    
+    document.querySelector('#employeeForm button[type="submit"]').textContent = '💾 Update Employee';
+    document.getElementById('employees').scrollIntoView({behavior: 'smooth'});
+}
+
+        function displayEmployees() {
         const list = document.getElementById('employeeList');
         list.innerHTML = '';
         if (employees.length === 0) {
@@ -649,6 +680,7 @@
                         <p>DOJ: ${emp.doj} | Salary: ₹${emp.basicSalary.toLocaleString()}</p>
                     </div>
                     <div class="card-actions">
+                        <button class="btn btn-info" onclick="editEmployee(${index})">✏️ Edit</button>
                         <button class="btn btn-danger" onclick="deleteEmployee(${index})">🗑️ Delete</button>
                     </div>
                 </div>
