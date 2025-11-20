@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vamsi's Payroll Management System</title>
+    <title>Payroll Manager Pro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
@@ -283,73 +283,79 @@
             padding: 20px;
         }
         
+        /* COMPACT PAYSLIP STYLES - OPTIMIZED FOR 1 PAGE PDF */
         .payslip {
             background: white;
-            padding: 30px;
+            padding: 15px 20px;
             max-width: 100%;
             margin: 0 auto;
-            font-size: 13px;
+            font-size: 11px;
+            line-height: 1.3;
         }
         
         @media (min-width: 768px) {
             .payslip {
-                padding: 40px;
-                font-size: 14px;
+                padding: 20px 25px;
+                font-size: 12px;
             }
         }
         
+        /* COMPACT HEADER */
         .payslip-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
-    padding: 15px 20px; /* Reduced padding */
-    margin: -20px -20px 15px -20px; /* Less margin */
-    border-radius: 0;
-    font-size: 1rem; /* Smaller font */
-}
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 12px 15px;
+            margin: -15px -20px 12px -20px;
+            border-radius: 0;
+        }
         
         @media (min-width: 768px) {
             .payslip-header {
-                margin: -40px -40px 30px -40px;
-                padding: 30px;
+                margin: -20px -25px 15px -25px;
+                padding: 15px 20px;
             }
         }
         
         .payslip-header h2 {
-    margin-bottom: 5px;
-    font-size: 1.5rem; /* Smaller */
-}
+            margin-bottom: 4px;
+            font-size: 16px;
+            font-weight: 600;
+        }
         
         @media (min-width: 768px) {
             .payslip-header h2 {
-                font-size: 26px;
+                font-size: 18px;
             }
         }
         
         .payslip-header p {
-            font-size: 12px;
+            font-size: 10px;
             opacity: 0.95;
-            margin: 3px 0;
+            margin: 2px 0;
+            line-height: 1.3;
         }
         
         .payslip-header h3 {
-            margin-top: 10px;
-            font-size: 1.2rem;
+            margin-top: 8px;
+            font-size: 14px;
             border-top: 1px solid rgba(255,255,255,0.3);
-            padding-top: 18px;
+            padding-top: 8px;
+            font-weight: 600;
         }
         
+        /* COMPACT TABLES */
         .payslip-table {
             width: 100%;
-            margin: 20px 0;
+            margin: 10px 0;
             border-collapse: collapse;
         }
         
         .payslip-table td, .payslip-table th {
-            padding: 10px 8px;
+            padding: 6px 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
-            font-size: 13px;
+            font-size: 11px;
         }
         
         .payslip-table th {
@@ -357,41 +363,56 @@
             font-weight: 600;
         }
         
+        .payslip h4 {
+            font-size: 12px;
+            margin: 12px 0 6px 0;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* COMPACT FOOTER */
         .payslip-footer {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            margin: 25px -30px -30px -30px;
-            padding: 20px;
+            margin: 12px -20px -15px -20px;
+            padding: 10px 15px;
             text-align: center;
-            font-size: 11px;
-            line-height: 1.6;
+            font-size: 9px;
+            line-height: 1.4;
         }
         
         @media (min-width: 768px) {
             .payslip-footer {
-                margin: 30px -40px -40px -40px;
-                padding: 25px;
-                font-size: 12px;
+                margin: 15px -25px -20px -25px;
+                padding: 12px 20px;
+                font-size: 10px;
             }
         }
         
+        .payslip-footer p {
+            margin: 0;
+        }
+        
+        /* COMPACT NET SALARY BOX */
         .net-salary-box {
             text-align: center;
-            margin: 25px 0;
-            padding: 25px;
+            margin: 12px 0;
+            padding: 12px 15px;
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            border-radius: 10px;
+            border-radius: 8px;
             color: white;
         }
         
         .net-salary-box h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 16px;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
         
         .net-salary-box p {
-            font-size: 14px;
+            font-size: 11px;
             opacity: 0.95;
+            margin: 0;
         }
         
         .alert {
@@ -435,6 +456,7 @@
             cursor: pointer;
         }
         
+        /* PRINT OPTIMIZATION FOR PDF */
         @media print {
             body { 
                 background: white;
@@ -452,19 +474,37 @@
             }
             .payslip {
                 border: none;
-                padding: 20px;
-                margin: 15px auto;
+                padding: 15px;
+                margin: 0;
                 max-width: 100%;
+                page-break-inside: avoid;
+                font-size: 11px;
+            }
+            .payslip-header {
+                padding: 12px;
+                margin: -15px -15px 10px -15px;
+            }
+            .payslip-footer {
+                padding: 10px;
+                margin: 10px -15px -15px -15px;
             }
             .modal-body {
                 padding: 0;
+            }
+            .payslip-table td, .payslip-table th {
+                padding: 5px 6px;
+                font-size: 10px;
+            }
+            .net-salary-box {
+                margin: 10px 0;
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💼 Vamsi's Payroll Management System</h1>
+        <h1>💼 Payroll Manager Pro</h1>
         <p class="subtitle">Professional Payroll Management System</p>
         
         <div class="alert alert-info">
@@ -986,7 +1026,7 @@
             currentPayslipData = null;
         }
         
-        // Generate payslip HTML
+        // Generate payslip HTML (COMPACT VERSION)
         function generatePayslipHTML(slip) {
             return `
                 <div class="payslip" id="currentPayslip">
@@ -998,7 +1038,7 @@
                         <h3>SALARY SLIP - ${slip.monthName}</h3>
                     </div>
                     
-                    <h4 style="margin-top:20px;color:#333;">Employee Information</h4>
+                    <h4>Employee Information</h4>
                     <table class="payslip-table">
                         <tr>
                             <td style="width:25%;"><strong>Employee Name:</strong></td>
@@ -1024,17 +1064,17 @@
                         </tr>
                     </table>
                     
-                    <h4 style="margin-top:20px;color:#333;">Attendance Details</h4>
+                    <h4>Attendance Details</h4>
                     <table class="payslip-table">
                         <tr>
-                            <td style="width:25%;">Total Days: <strong>${slip.totalDays}</strong></td>
-                            <td style="width:25%;">Working Days: <strong>${slip.workingDays}</strong></td>
-                            <td style="width:25%;">Paid Days: <strong>${slip.paidDays}</strong></td>
-                            <td style="width:25%;">LOP Days: <strong>${slip.lopDays}</strong></td>
+                            <td style="width:25%;">Total: <strong>${slip.totalDays}</strong></td>
+                            <td style="width:25%;">Working: <strong>${slip.workingDays}</strong></td>
+                            <td style="width:25%;">Paid: <strong>${slip.paidDays}</strong></td>
+                            <td style="width:25%;">LOP: <strong>${slip.lopDays}</strong></td>
                         </tr>
                     </table>
                     
-                    <h4 style="margin-top:20px;color:#333;">Earnings & Deductions</h4>
+                    <h4>Earnings & Deductions</h4>
                     <table class="payslip-table">
                         <thead>
                             <tr>
@@ -1085,7 +1125,6 @@
                     
                     <div class="payslip-footer">
                         <p><strong>This is a system-generated payslip and does not require a physical signature.</strong></p>
-                        <p>Generated on: ${slip.generatedDate}</p>
                     </div>
                 </div>
             `;
@@ -1100,13 +1139,14 @@
             buttons.style.display = 'none';
             
             const opt = {
-                margin: [10, 10, 10, 10],
-                filename: currentPayslipData.filename + '.pdf',
+                margin: [5, 5, 5, 5],
+                filename: currentPayslipData.filename.replace(/\s+/g, '_') + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { 
                     scale: 2,
                     useCORS: true,
-                    letterRendering: true
+                    letterRendering: true,
+                    logging: false
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
@@ -1116,28 +1156,43 @@
             });
         }
         
-        // Quick download from card
+        // FIXED: Quick download from card
         function quickDownloadPDF(index) {
-    const slip = payslips[index];
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = generatePayslipHTML(slip);
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    document.body.appendChild(tempDiv);
-
-    const opt = {
-        margin: [5, 5, 5, 5],
-        filename: `${slip.employee.name}_${slip.monthName}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(tempDiv.firstChild).save().then(() => {
-        document.body.removeChild(tempDiv);
-    });
-}
-
+            const slip = payslips[index];
+            
+            // Create temporary container
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = generatePayslipHTML(slip);
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            tempDiv.style.top = '0';
+            document.body.appendChild(tempDiv);
+            
+            const filename = `${slip.employee.name}_${slip.monthName}`.replace(/\s+/g, '_');
+            
+            const opt = {
+                margin: [5, 5, 5, 5],
+                filename: filename + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true,
+                    logging: false
+                },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            const payslipElement = tempDiv.querySelector('.payslip');
+            
+            html2pdf().set(opt).from(payslipElement).save().then(() => {
+                document.body.removeChild(tempDiv);
+            }).catch((error) => {
+                console.error('PDF generation error:', error);
+                document.body.removeChild(tempDiv);
+                alert('Error generating PDF. Please try viewing the payslip and downloading from there.');
+            });
+        }
         
         // Delete payslip
         function deletePayslip(index) {
