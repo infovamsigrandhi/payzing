@@ -337,6 +337,13 @@
                     <label>Employee ID *</label>
                     <input type="text" id="empId" required />
                 </div>
+                    <!-- ADD THIS NEW FIELD -->
+                    <div class="form-group">
+                    <label>Select Company *</label>
+                    <select id="empCompany" required>
+                        <option value="">Select Company</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Date of Joining *</label>
                     <input type="date" id="empDOJ" required />
@@ -514,9 +521,25 @@
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById(tabName).classList.add('active');
         event.target.classList.add('active');
-        if (tabName === 'generate') { updateCompanySelect(); updateEmployeeSelect(); }
+    
+        if (tabName === 'employees') {
+            updateEmployeeCompanyDropdown();
+        }
+        if (tabName === 'generate') { 
+            updateCompanySelect(); 
+            updateEmployeeSelect(); 
+        }
         if (tabName === 'view') displayPayslips();
     }
+
+    function updateEmployeeCompanyDropdown() {
+        const select = document.getElementById('empCompany');
+        select.innerHTML = '<option value="">Select Company</option>';
+        companies.forEach((comp, index) => {
+            select.innerHTML += `<option value="${index}">${comp.name}</option>`;
+        });
+    }
+
 
     function toggleCalcMode() {
         const mode = document.querySelector('input[name="calcMode"]:checked').value;
@@ -618,6 +641,8 @@
     const employee = {
         id: document.getElementById('empId').value,
         name: document.getElementById('empName').value,
+        companyIndex: parseInt(companyIndex),  // ADD THIS LINE
+        companyName: companies[companyIndex].name,  // ADD THIS LINE
         doj: document.getElementById('empDOJ').value,
         designation: document.getElementById('empDesignation').value,
         department: document.getElementById('empDepartment').value,
@@ -650,6 +675,7 @@
     
     document.getElementById('empName').value = emp.name;
     document.getElementById('empId').value = emp.id;
+    document.getElementById('empCompany').value = emp.companyIndex || '';
     document.getElementById('empDOJ').value = emp.doj;
     document.getElementById('empDesignation').value = emp.designation;
     document.getElementById('empDepartment').value = emp.department;
@@ -664,7 +690,7 @@
     document.getElementById('employees').scrollIntoView({behavior: 'smooth'});
 }
 
-        function displayEmployees() {
+    function displayEmployees() {
         const list = document.getElementById('employeeList');
         list.innerHTML = '';
         if (employees.length === 0) {
@@ -676,6 +702,7 @@
                 <div class="card">
                     <div class="card-info">
                         <h3>${emp.name} (${emp.id})</h3>
+                        <p><strong>Company:</strong> ${emp.companyName || 'N/A'}</p>
                         <p>${emp.designation} | ${emp.department}</p>
                         <p>DOJ: ${emp.doj} | Salary: ₹${emp.basicSalary.toLocaleString()}</p>
                     </div>
@@ -684,9 +711,10 @@
                         <button class="btn btn-danger" onclick="deleteEmployee(${index})">🗑️ Delete</button>
                     </div>
                 </div>
-            `;
+            `; //Probable error
         });
     }
+
 
     function deleteEmployee(index) {
         if (confirm('Delete this employee?')) {
@@ -703,13 +731,25 @@
             select.innerHTML += `<option value="${index}">${comp.name}</option>`;
         });
     }
+    
+    document.getElementById('selectCompany').addEventListener('change', function() {
+        updateEmployeeSelect();
+    });
+
     function updateEmployeeSelect() {
+        const compIndex = document.getElementById('selectCompany').value;
         const select = document.getElementById('selectEmployee');
         select.innerHTML = '<option value="">Select Employee</option>';
+    
+        if (compIndex === '') return;
+    
         employees.forEach((emp, index) => {
-            select.innerHTML += `<option value="${index}">${emp.id} - ${emp.name}</option>`;
+            if (emp.companyIndex === parseInt(compIndex)) {
+                select.innerHTML += `<option value="${index}">${emp.id} - ${emp.name}</option>`;
+            }
         });
     }
+
 
     // Payslip generation
     document.getElementById('payslipForm').addEventListener('submit', function (e) {
