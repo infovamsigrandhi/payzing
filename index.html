@@ -460,7 +460,31 @@
                         <label>DA (₹)</label>
                         <input type="number" id="manualDA" value="0" step="0.01" />
                     </div>
-                    <!-- Future extra allowances here -->
+                        <!-- Manual allowances -->
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="manualConveyanceCheck" onchange="toggleManualAllowance('conveyance')">
+            Conveyance Allowance
+        </label>
+        <input type="number" id="manualConveyance" placeholder="Conveyance (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="manualMedicalCheck" onchange="toggleManualAllowance('medical')">
+            Medical Allowance
+        </label>
+        <input type="number" id="manualMedical" placeholder="Medical (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="manualSpecialCheck" onchange="toggleManualAllowance('special')">
+            Special Allowance
+        </label>
+        <input type="number" id="manualSpecial" placeholder="Special (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
                     <h3 style="margin-top: 10px;">Deductions</h3>
                     <div class="form-group">
                         <label>PF (₹)</label>
@@ -545,6 +569,15 @@
         const mode = document.querySelector('input[name="calcMode"]:checked').value;
         document.getElementById('autoFields').style.display = mode === 'auto' ? 'block' : 'none';
         document.getElementById('manualFields').style.display = mode === 'manual' ? 'block' : 'none';
+    }
+
+    function toggleManualAllowance(type) {
+        const idPart = type.charAt(0).toUpperCase() + type.slice(1); // e.g. 'conveyance' -> 'Conveyance'
+        const check = document.getElementById('manual' + idPart + 'Check');
+        const input = document.getElementById('manual' + idPart);
+        if (!check || !input) return;
+        input.style.display = check.checked ? 'block' : 'none';
+        if (!check.checked) input.value = 0;
     }
 
     // Add company with logo
@@ -802,28 +835,45 @@
                 generatedDate: new Date().toLocaleString()
             };
         } else {
-            const workingDays = parseInt(document.getElementById('manualWorkingDays').value);
-            const paidDays = parseInt(document.getElementById('manualPaidDays').value);
-            const basic = parseFloat(document.getElementById('manualBasic').value);
-            const hra = parseFloat(document.getElementById('manualHRA').value);
-            const da = parseFloat(document.getElementById('manualDA').value);
-            const pf = parseFloat(document.getElementById('manualPF').value);
-            const profTax = parseFloat(document.getElementById('manualProfTax').value);
-            const tds = parseFloat(document.getElementById('manualTDS').value);
-            const lopDeduction = parseFloat(document.getElementById('manualLOP').value);
-            const gross = basic + hra + da;
-            const totalDeductions = pf + profTax + tds + lopDeduction;
-            const net = gross - totalDeductions;
-            const lopDays = workingDays - paidDays;
-            payslip = {
-                company, employee: emp, month,
-                monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
-                totalDays, workingDays, paidDays, lopDays,
-                basic, hra, da, gross,
-                pf, profTax, tds, lopDeduction, totalDeductions, net,
-                generatedDate: new Date().toLocaleString()
-            };
-        }
+    const workingDays = parseInt(document.getElementById('manualWorkingDays').value);
+    const paidDays = parseInt(document.getElementById('manualPaidDays').value);
+    const basic = parseFloat(document.getElementById('manualBasic').value) || 0;
+    const hra = parseFloat(document.getElementById('manualHRA').value) || 0;
+    const da = parseFloat(document.getElementById('manualDA').value) || 0;
+
+    // New allowances
+    const conveyance = document.getElementById('manualConveyanceCheck').checked 
+        ? parseFloat(document.getElementById('manualConveyance').value) || 0 
+        : 0;
+    const medical = document.getElementById('manualMedicalCheck').checked 
+        ? parseFloat(document.getElementById('manualMedical').value) || 0 
+        : 0;
+    const special = document.getElementById('manualSpecialCheck').checked 
+        ? parseFloat(document.getElementById('manualSpecial').value) || 0 
+        : 0;
+
+    const pf = parseFloat(document.getElementById('manualPF').value) || 0;
+    const profTax = parseFloat(document.getElementById('manualProfTax').value) || 0;
+    const tds = parseFloat(document.getElementById('manualTDS').value) || 0;
+    const lopDeduction = parseFloat(document.getElementById('manualLOP').value) || 0;
+
+    const gross = basic + hra + da + conveyance + medical + special;
+    const totalDeductions = pf + profTax + tds + lopDeduction;
+    const net = gross - totalDeductions;
+    const lopDays = workingDays - paidDays;
+
+    payslip = {
+        company, employee: emp, month,
+        monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
+        totalDays, workingDays, paidDays, lopDays,
+        basic, hra, da,
+        conveyance, medical, special,   // store new allowances
+        gross,
+        pf, profTax, tds, lopDeduction, totalDeductions, net,
+        generatedDate: new Date().toLocaleString()
+    };
+}
+
         payslips.push(payslip);
         localStorage.setItem('payslips', JSON.stringify(payslips));
         alert('✅ Payslip generated successfully!');
