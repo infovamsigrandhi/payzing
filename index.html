@@ -177,52 +177,117 @@
         @media (min-width: 768px) { .alert { padding: 15px; font-size: 14px; } }
         .alert-success { background: #c6f6d5; color: #22543d; }
         .alert-info    { background: #bee3f8; color: #2c5282; }
-        @media (max-width: 767px) {
-          .calc-mode {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 10px;
-            gap: 10px;
-            width: 100%;
-            box-sizing: border-box;
-          }
-          .calc-mode label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: normal;
-            width: 100%;
-            font-size: 15px;
-            padding: 5px 0;
-            word-break: break-word;
-          }
-          #generate .form-group,
-          .tab-content .form-group {
-            width: 100% !important;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-          }
-          #generate form input,
-          #generate form select,
-          #generate form textarea {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            font-size: 15px;
-          }
-          #generate form label {
-            width: 100%;
-            word-break: break-word;
-            margin-bottom: 8px;
-          }
-          #generate .btn {
-            width: 100%;
-            margin: 7px 0;
-          }
-        }
+        /* Complete Mobile Fix - Add before closing </style> tag */
+@media (max-width: 767px) {
+  /* Fix container padding on mobile */
+  .container {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  /* Fix calc-mode radio buttons - stack vertically */
+  .calc-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f7fafc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .calc-mode label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: normal;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    padding: 8px 5px;
+    line-height: 1.4;
+  }
+
+  .calc-mode input[type="radio"] {
+    flex-shrink: 0;
+    margin-right: 5px;
+  }
+
+  /* Force all form groups to stack properly */
+  #generate .form-group,
+  #employees .form-group,
+  #companies .form-group,
+  .tab-content .form-group {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 12px;
+  }
+
+  /* Ensure all inputs stay within bounds */
+  #generate form input,
+  #generate form select,
+  #generate form textarea,
+  input, select, textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* Fix labels */
+  #generate form label,
+  label {
+    width: 100%;
+    word-break: break-word;
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+
+  /* Make buttons full width on mobile */
+  #generate .btn,
+  .btn {
+    width: 100%;
+    margin: 5px 0;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Fix tabs to wrap properly */
+  .tabs {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 13px;
+    flex: 1 1 auto;
+    min-width: fit-content;
+  }
+
+  /* Fix heading sizes */
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+    margin-top: 15px;
+  }
+
+  h3 {
+    font-size: 1.1em;
+  }
+}
+
         @media print {
             body { background: white; padding: 0;}
             .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
