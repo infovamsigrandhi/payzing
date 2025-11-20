@@ -171,6 +171,11 @@
             color: white;
         }
         
+        .btn-secondary {
+            background: #a0aec0;
+            color: white;
+        }
+        
         .card-list {
             display: grid;
             gap: 15px;
@@ -212,6 +217,9 @@
         
         .card-actions {
             margin-top: 10px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
         }
         
         @media (min-width: 768px) {
@@ -220,12 +228,66 @@
             }
         }
         
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        .modal.active {
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            width: 95%;
+            max-width: 900px;
+            border-radius: 10px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .modal-close:hover {
+            opacity: 0.8;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
         .payslip {
             background: white;
-            padding: 20px;
-            border: 2px solid #333;
-            max-width: 800px;
-            margin: 20px auto;
+            padding: 30px;
+            max-width: 100%;
+            margin: 0 auto;
             font-size: 13px;
         }
         
@@ -240,39 +302,40 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
-            padding: 20px;
-            margin: -20px -20px 20px -20px;
+            padding: 25px;
+            margin: -30px -30px 25px -30px;
             border-radius: 0;
         }
         
         @media (min-width: 768px) {
             .payslip-header {
-                margin: -40px -40px 20px -40px;
+                margin: -40px -40px 30px -40px;
                 padding: 30px;
             }
         }
         
         .payslip-header h2 {
-            margin-bottom: 5px;
-            font-size: 20px;
+            margin-bottom: 8px;
+            font-size: 22px;
         }
         
         @media (min-width: 768px) {
             .payslip-header h2 {
-                font-size: 24px;
+                font-size: 26px;
             }
         }
         
         .payslip-header p {
             font-size: 12px;
-            opacity: 0.9;
+            opacity: 0.95;
+            margin: 3px 0;
         }
         
         .payslip-header h3 {
-            margin-top: 15px;
+            margin-top: 18px;
             font-size: 18px;
             border-top: 1px solid rgba(255,255,255,0.3);
-            padding-top: 15px;
+            padding-top: 18px;
         }
         
         .payslip-table {
@@ -282,24 +345,25 @@
         }
         
         .payslip-table td, .payslip-table th {
-            padding: 8px;
+            padding: 10px 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
+            font-size: 13px;
         }
         
-        @media (min-width: 768px) {
-            .payslip-table td, .payslip-table th {
-                padding: 10px;
-            }
+        .payslip-table th {
+            background: #f7fafc;
+            font-weight: 600;
         }
         
         .payslip-footer {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            margin: 20px -20px -20px -20px;
+            margin: 25px -30px -30px -30px;
             padding: 20px;
             text-align: center;
             font-size: 11px;
+            line-height: 1.6;
         }
         
         @media (min-width: 768px) {
@@ -308,6 +372,25 @@
                 padding: 25px;
                 font-size: 12px;
             }
+        }
+        
+        .net-salary-box {
+            text-align: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .net-salary-box h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .net-salary-box p {
+            font-size: 14px;
+            opacity: 0.95;
         }
         
         .alert {
@@ -341,6 +424,7 @@
             padding: 15px;
             background: #f7fafc;
             border-radius: 8px;
+            flex-wrap: wrap;
         }
         
         .calc-mode label {
@@ -355,19 +439,24 @@
                 background: white;
                 padding: 0;
             }
-            .container { 
+            .container, .modal-content { 
                 box-shadow: none;
                 padding: 0;
                 border-radius: 0;
+                margin: 0;
+                max-width: 100%;
             }
-            .tabs, .btn, .card-actions { 
+            .tabs, .btn, .card-actions, .modal-header { 
                 display: none !important;
             }
             .payslip {
                 border: none;
-                padding: 0;
+                padding: 20px;
                 margin: 0;
                 max-width: 100%;
+            }
+            .modal-body {
+                padding: 0;
             }
         }
     </style>
@@ -585,7 +674,25 @@
         <!-- View Payslips Tab -->
         <div id="view" class="tab-content">
             <h2>Generated Payslips</h2>
-            <div id="payslipView"></div>
+            <div id="payslipView" class="card-list"></div>
+        </div>
+    </div>
+    
+    <!-- Payslip Modal -->
+    <div id="payslipModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Payslip Preview</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="payslipContent"></div>
+                <div style="text-align:center;padding:20px;border-top:2px solid #eee;">
+                    <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
+                    <button class="btn btn-info" onclick="downloadCurrentPDF()">📥 Download PDF</button>
+                    <button class="btn btn-secondary" onclick="closeModal()">✖️ Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -594,6 +701,7 @@
         let companies = JSON.parse(localStorage.getItem('companies')) || [];
         let employees = JSON.parse(localStorage.getItem('employees')) || [];
         let payslips = JSON.parse(localStorage.getItem('payslips')) || [];
+        let currentPayslipData = null;
         
         // Tab switching
         function showTab(tabName) {
@@ -830,7 +938,7 @@
             displayPayslips();
         });
         
-        // Display payslips
+        // Display payslips as summary cards
         function displayPayslips() {
             const view = document.getElementById('payslipView');
             view.innerHTML = '';
@@ -841,60 +949,101 @@
             }
             
             payslips.slice().reverse().forEach((slip, index) => {
-                const slipId = `payslip-${payslips.length - 1 - index}`;
+                const actualIndex = payslips.length - 1 - index;
                 view.innerHTML += `
-                    <div class="payslip" id="${slipId}">
-                        <div class="payslip-header">
-                            <h2>${slip.company.name}</h2>
-                            <p>${slip.company.address}</p>
-                            ${slip.company.pan ? `<p>PAN: ${slip.company.pan}</p>` : ''}
-                            ${slip.company.tan ? `<p>TAN: ${slip.company.tan}</p>` : ''}
-                            <h3>SALARY SLIP - ${slip.monthName}</h3>
+                    <div class="card">
+                        <div class="card-info">
+                            <h3>${slip.employee.name} - ${slip.monthName}</h3>
+                            <p><strong>Company:</strong> ${slip.company.name}</p>
+                            <p><strong>Designation:</strong> ${slip.employee.designation} | ${slip.employee.department}</p>
+                            <p><strong>Net Salary:</strong> ₹${slip.net.toFixed(2)}</p>
+                            <p style="font-size:12px;color:#999;">Generated: ${slip.generatedDate}</p>
                         </div>
-                        
-                        <table class="payslip-table">
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="viewPayslip(${actualIndex})">👁️ View</button>
+                            <button class="btn btn-info" onclick="quickDownloadPDF(${actualIndex})">📥 Download</button>
+                            <button class="btn btn-danger" onclick="deletePayslip(${actualIndex})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // View payslip in modal
+        function viewPayslip(index) {
+            const slip = payslips[index];
+            currentPayslipData = {slip, filename: `${slip.employee.name}_${slip.monthName}`};
+            
+            const content = generatePayslipHTML(slip);
+            document.getElementById('payslipContent').innerHTML = content;
+            document.getElementById('payslipModal').classList.add('active');
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('payslipModal').classList.remove('active');
+            currentPayslipData = null;
+        }
+        
+        // Generate payslip HTML
+        function generatePayslipHTML(slip) {
+            return `
+                <div class="payslip" id="currentPayslip">
+                    <div class="payslip-header">
+                        <h2>${slip.company.name}</h2>
+                        <p>${slip.company.address}</p>
+                        ${slip.company.pan ? `<p>PAN: ${slip.company.pan}</p>` : ''}
+                        ${slip.company.tan ? `<p>TAN: ${slip.company.tan}</p>` : ''}
+                        <h3>SALARY SLIP - ${slip.monthName}</h3>
+                    </div>
+                    
+                    <h4 style="margin-top:20px;color:#333;">Employee Information</h4>
+                    <table class="payslip-table">
+                        <tr>
+                            <td style="width:25%;"><strong>Employee Name:</strong></td>
+                            <td style="width:25%;">${slip.employee.name}</td>
+                            <td style="width:25%;"><strong>Employee ID:</strong></td>
+                            <td style="width:25%;">${slip.employee.id}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Designation:</strong></td>
+                            <td>${slip.employee.designation}</td>
+                            <td><strong>Department:</strong></td>
+                            <td>${slip.employee.department}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date of Joining:</strong></td>
+                            <td>${slip.employee.doj}</td>
+                            <td><strong>PAN:</strong></td>
+                            <td>${slip.employee.pan || '-'}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bank A/C:</strong></td>
+                            <td colspan="3">${slip.employee.bank || '-'}</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="margin-top:20px;color:#333;">Attendance Details</h4>
+                    <table class="payslip-table">
+                        <tr>
+                            <td style="width:25%;">Total Days: <strong>${slip.totalDays}</strong></td>
+                            <td style="width:25%;">Working Days: <strong>${slip.workingDays}</strong></td>
+                            <td style="width:25%;">Paid Days: <strong>${slip.paidDays}</strong></td>
+                            <td style="width:25%;">LOP Days: <strong>${slip.lopDays}</strong></td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="margin-top:20px;color:#333;">Earnings & Deductions</h4>
+                    <table class="payslip-table">
+                        <thead>
                             <tr>
-                                <td><strong>Employee Name:</strong></td>
-                                <td>${slip.employee.name}</td>
-                                <td><strong>Employee ID:</strong></td>
-                                <td>${slip.employee.id}</td>
+                                <th style="width:40%;">Earnings</th>
+                                <th style="width:10%;text-align:right;">Amount (₹)</th>
+                                <th style="width:40%;">Deductions</th>
+                                <th style="width:10%;text-align:right;">Amount (₹)</th>
                             </tr>
-                            <tr>
-                                <td><strong>Designation:</strong></td>
-                                <td>${slip.employee.designation}</td>
-                                <td><strong>Department:</strong></td>
-                                <td>${slip.employee.department}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date of Joining:</strong></td>
-                                <td>${slip.employee.doj}</td>
-                                <td><strong>PAN:</strong></td>
-                                <td>${slip.employee.pan || '-'}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bank A/C:</strong></td>
-                                <td colspan="3">${slip.employee.bank || '-'}</td>
-                            </tr>
-                        </table>
-                        
-                        <h4>Attendance Details</h4>
-                        <table class="payslip-table">
-                            <tr>
-                                <td>Total Days: ${slip.totalDays}</td>
-                                <td>Working Days: ${slip.workingDays}</td>
-                                <td>Paid Days: ${slip.paidDays}</td>
-                                <td>LOP Days: ${slip.lopDays}</td>
-                            </tr>
-                        </table>
-                        
-                        <h4>Earnings & Deductions</h4>
-                        <table class="payslip-table" style="width:100%;">
-                            <tr style="background:#f0f0f0;">
-                                <th style="padding:10px;">Earnings</th>
-                                <th style="padding:10px;text-align:right;">Amount (₹)</th>
-                                <th style="padding:10px;">Deductions</th>
-                                <th style="padding:10px;text-align:right;">Amount (₹)</th>
-                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>Basic Salary</td>
                                 <td style="text-align:right;">${slip.basic.toFixed(2)}</td>
@@ -919,50 +1068,76 @@
                                 <td>LOP Deduction</td>
                                 <td style="text-align:right;">${slip.lopDeduction.toFixed(2)}</td>
                             </tr>
-                            <tr style="background:#f0f0f0;font-weight:bold;">
+                            <tr style="background:#f7fafc;font-weight:bold;">
                                 <td>GROSS SALARY</td>
                                 <td style="text-align:right;">₹${slip.gross.toFixed(2)}</td>
                                 <td>TOTAL DEDUCTIONS</td>
                                 <td style="text-align:right;">₹${slip.totalDeductions.toFixed(2)}</td>
                             </tr>
-                        </table>
-                        
-                        <div style="text-align:center;margin:30px 0;padding:20px;background:linear-gradient(135deg, #48bb78 0%, #38a169 100%);border-radius:10px;color:white;">
-                            <h3>NET SALARY: ₹${slip.net.toFixed(2)}</h3>
-                            <p style="margin-top:10px;">${numberToWords(slip.net)} Rupees Only</p>
-                        </div>
-                        
-                        <div class="payslip-footer">
-                            <p><strong>This is a system-generated payslip and does not require a physical signature.</strong></p>
-                            <p>Generated on: ${slip.generatedDate}</p>
-                        </div>
-                        
-                        <div style="text-align:center;margin-top:20px;">
-                            <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
-                            <button class="btn btn-info" onclick="downloadPDF('${slipId}', '${slip.employee.name}_${slip.monthName}')">📥 Download PDF</button>
-                            <button class="btn btn-danger" onclick="deletePayslip(${payslips.length - 1 - index})">🗑️ Delete</button>
-                        </div>
+                        </tbody>
+                    </table>
+                    
+                    <div class="net-salary-box">
+                        <h3>NET SALARY: ₹${slip.net.toFixed(2)}</h3>
+                        <p>${numberToWords(slip.net)} Rupees Only</p>
                     </div>
-                `;
-            });
+                    
+                    <div class="payslip-footer">
+                        <p><strong>This is a system-generated payslip and does not require a physical signature.</strong></p>
+                        <p>Generated on: ${slip.generatedDate}</p>
+                    </div>
+                </div>
+            `;
         }
         
-        // Download as PDF
-        function downloadPDF(elementId, filename) {
-            const element = document.getElementById(elementId);
-            const buttons = element.querySelector('div[style*="text-align:center"]');
+        // Download current payslip from modal
+        function downloadCurrentPDF() {
+            if (!currentPayslipData) return;
+            
+            const element = document.getElementById('currentPayslip');
+            const buttons = element.parentElement.nextElementSibling;
             buttons.style.display = 'none';
             
             const opt = {
-                margin: 10,
-                filename: filename + '.pdf',
+                margin: [10, 10, 10, 10],
+                filename: currentPayslipData.filename + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
             html2pdf().set(opt).from(element).save().then(() => {
-                buttons.style.display = 'block';
+                buttons.style.display = 'flex';
+            });
+        }
+        
+        // Quick download from card
+        function quickDownloadPDF(index) {
+            const slip = payslips[index];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = generatePayslipHTML(slip);
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
+            
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: `${slip.employee.name}_${slip.monthName}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(tempDiv.firstChild).save().then(() => {
+                document.body.removeChild(tempDiv);
             });
         }
         
