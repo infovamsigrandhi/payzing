@@ -521,6 +521,35 @@
                 padding: 10px;
             }
         }
+
+		@media (max-width: 767px) {
+  		/* Ensure all input elements have max-width and do not overflow */
+  		#generate form input,
+  		#generate form select,
+ 		 #generate form textarea {
+    		max-width: 100%;
+		    word-wrap: break-word;
+  		}
+
+  		/* Make labels and inputs stack fully vertical and full width */
+  		#generate form .form-group {
+    		display: flex;
+    		flex-direction: column;
+    		width: 100% !important;
+  		}
+
+  		/* Prevent radios wrapping weirdly, increase spacing */
+  		.calc-mode label {
+    		white-space: normal; /* allow wrapping */
+    		padding-bottom: 5px;
+  		}
+
+  		/* Adjust button container to stack buttons vertically on narrow screens */
+  		.calc-mode {
+    		flex-direction: column;
+    		align-items: flex-start;
+  		}
+	}
     </style>
 </head>
 <body>
