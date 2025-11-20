@@ -502,6 +502,7 @@
     </div>
 <script>
     // Data storage/setup
+    let editingCompanyIndex = null;
     let companies = JSON.parse(localStorage.getItem('companies')) || [];
     let employees = JSON.parse(localStorage.getItem('employees')) || [];
     let payslips = JSON.parse(localStorage.getItem('payslips')) || [];
@@ -524,29 +525,55 @@
 
     // Add company with logo
     document.getElementById('companyForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const fileInput = document.getElementById('compLogo');
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();
-            reader.onload = function (event) { addCompany(event.target.result); };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else { addCompany(null); }
-        function addCompany(logoDataUrl) {
-            const company = {
-                name: document.getElementById('compName').value,
-                address: document.getElementById('compAddress').value,
-                pan: document.getElementById('compPAN').value || '',
-                tan: document.getElementById('compTAN').value || '',
-                logo: logoDataUrl || ''
-            };
+    e.preventDefault();
+    const fileInput = document.getElementById('compLogo');
+    if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function (event) { saveCompany(event.target.result); };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        saveCompany(null);
+    }
+
+    function saveCompany(logoDataUrl) {
+        const company = {
+            name: document.getElementById('compName').value,
+            address: document.getElementById('compAddress').value,
+            pan: document.getElementById('compPAN').value || '',
+            tan: document.getElementById('compTAN').value || '',
+            logo: logoDataUrl || (editingCompanyIndex !== null ? companies[editingCompanyIndex].logo : '')
+        };
+        
+        if (editingCompanyIndex !== null) {
+            companies[editingCompanyIndex] = company;
+            editingCompanyIndex = null;
+            document.querySelector('#companyForm button[type="submit"]').textContent = '➕ Add Company';
+            alert('✅ Company updated successfully!');
+        } else {
             companies.push(company);
-            localStorage.setItem('companies', JSON.stringify(companies));
-            document.getElementById('companyForm').reset();
-            displayCompanies();
             alert('✅ Company added successfully!');
         }
-    });
+        
+        localStorage.setItem('companies', JSON.stringify(companies));
+        document.getElementById('companyForm').reset();
+        displayCompanies();
+    }
+});
 
+    function editCompany(index) {
+    editingCompanyIndex = index;
+    const comp = companies[index];
+    
+    document.getElementById('compName').value = comp.name;
+    document.getElementById('compAddress').value = comp.address;
+    document.getElementById('compPAN').value = comp.pan || '';
+    document.getElementById('compTAN').value = comp.tan || '';
+    
+    document.querySelector('#companyForm button[type="submit"]').textContent = '💾 Update Company';
+    document.getElementById('companies').scrollIntoView({behavior: 'smooth'});
+}
+
+    
     function displayCompanies() {
         const list = document.getElementById('companyList');
         list.innerHTML = '';
@@ -567,6 +594,7 @@
                         </div>
                     </div>
                     <div class="card-actions">
+                        <button class="btn btn-info" onclick="editCompany(${index})">✏️ Edit</button>
                         <button class="btn btn-danger" onclick="deleteCompany(${index})">🗑️ Delete</button>
                     </div>
                 </div>
