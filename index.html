@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Payroll Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
@@ -11,14 +11,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 10px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -27,28 +27,28 @@
             padding: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        
+
         @media (min-width: 768px) {
             body { padding: 20px; }
             .container { padding: 40px; }
         }
-        
+
         h1 {
             color: #667eea;
             margin-bottom: 10px;
             font-size: 1.8em;
         }
-        
+
         @media (min-width: 768px) {
             h1 { font-size: 2.5em; }
         }
-        
+
         .subtitle {
             color: #666;
             margin-bottom: 20px;
             font-size: 14px;
         }
-        
+
         .tabs {
             display: flex;
             gap: 5px;
@@ -57,7 +57,7 @@
             overflow-x: auto;
             flex-wrap: wrap;
         }
-        
+
         .tab {
             padding: 12px 15px;
             cursor: pointer;
@@ -69,37 +69,37 @@
             transition: all 0.3s;
             white-space: nowrap;
         }
-        
+
         @media (min-width: 768px) {
             .tab {
                 padding: 15px 30px;
                 font-size: 16px;
             }
         }
-        
+
         .tab.active {
             color: #667eea;
             border-bottom-color: #667eea;
         }
-        
+
         .tab-content {
             display: none;
         }
-        
+
         .tab-content.active {
             display: block;
             animation: fadeIn 0.3s;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .form-group {
             margin-bottom: 15px;
         }
-        
+
         label {
             display: block;
             margin-bottom: 5px;
@@ -107,7 +107,7 @@
             color: #333;
             font-size: 14px;
         }
-        
+
         input, select, textarea {
             width: 100%;
             padding: 10px;
@@ -116,18 +116,18 @@
             font-size: 14px;
             transition: border 0.3s;
         }
-        
+
         @media (min-width: 768px) {
             input, select, textarea {
                 padding: 12px;
             }
         }
-        
+
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
         }
-        
+
         .btn {
             padding: 10px 20px;
             border: none;
@@ -137,58 +137,58 @@
             transition: all 0.3s;
             margin: 5px;
         }
-        
+
         @media (min-width: 768px) {
             .btn {
                 padding: 12px 30px;
                 font-size: 16px;
             }
         }
-        
+
         .btn-primary {
             background: #667eea;
             color: white;
         }
-        
+
         .btn-primary:hover {
             background: #5568d3;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
+
         .btn-success {
             background: #48bb78;
             color: white;
         }
-        
+
         .btn-danger {
             background: #f56565;
             color: white;
         }
-        
+
         .btn-info {
             background: #4299e1;
             color: white;
         }
-        
+
         .btn-secondary {
             background: #a0aec0;
             color: white;
         }
-        
+
         .card-list {
             display: grid;
             gap: 15px;
             margin-top: 20px;
         }
-        
+
         .card {
             border: 2px solid #eee;
             border-radius: 10px;
             padding: 15px;
             transition: all 0.3s;
         }
-        
+
         @media (min-width: 768px) {
             .card {
                 padding: 20px;
@@ -197,37 +197,37 @@
                 align-items: center;
             }
         }
-        
+
         .card:hover {
             border-color: #667eea;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .card-info h3 {
             color: #333;
             margin-bottom: 5px;
             font-size: 16px;
         }
-        
+
         .card-info p {
             color: #666;
             font-size: 13px;
             margin-top: 5px;
         }
-        
+
         .card-actions {
             margin-top: 10px;
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
         }
-        
+
         @media (min-width: 768px) {
             .card-actions {
                 margin-top: 0;
             }
         }
-        
+
         /* Modal styles */
         .modal {
             display: none;
@@ -240,11 +240,11 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.7);
         }
-        
+
         .modal.active {
             display: block;
         }
-        
+
         .modal-content {
             background-color: white;
             margin: 2% auto;
@@ -255,7 +255,7 @@
             max-height: 90vh;
             overflow-y: auto;
         }
-        
+
         .modal-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -265,7 +265,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .modal-close {
             color: white;
             font-size: 28px;
@@ -274,15 +274,15 @@
             background: none;
             border: none;
         }
-        
+
         .modal-close:hover {
             opacity: 0.8;
         }
-        
+
         .modal-body {
             padding: 20px;
         }
-        
+
         /* COMPACT PAYSLIP STYLES - OPTIMIZED FOR 1 PAGE PDF */
         .payslip {
             background: white;
@@ -292,14 +292,14 @@
             font-size: 11px;
             line-height: 1.3;
         }
-        
+
         @media (min-width: 768px) {
             .payslip {
                 padding: 20px 25px;
                 font-size: 12px;
             }
         }
-        
+
         /* COMPACT HEADER */
         .payslip-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -309,33 +309,33 @@
             margin: -15px -20px 12px -20px;
             border-radius: 0;
         }
-        
+
         @media (min-width: 768px) {
             .payslip-header {
                 margin: -20px -25px 15px -25px;
                 padding: 15px 20px;
             }
         }
-        
+
         .payslip-header h2 {
             margin-bottom: 4px;
             font-size: 16px;
             font-weight: 600;
         }
-        
+
         @media (min-width: 768px) {
             .payslip-header h2 {
                 font-size: 18px;
             }
         }
-        
+
         .payslip-header p {
             font-size: 10px;
             opacity: 0.95;
             margin: 2px 0;
             line-height: 1.3;
         }
-        
+
         .payslip-header h3 {
             margin-top: 8px;
             font-size: 14px;
@@ -343,33 +343,33 @@
             padding-top: 8px;
             font-weight: 600;
         }
-        
+
         /* COMPACT TABLES */
         .payslip-table {
             width: 100%;
             margin: 10px 0;
             border-collapse: collapse;
         }
-        
+
         .payslip-table td, .payslip-table th {
             padding: 6px 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
             font-size: 11px;
         }
-        
+
         .payslip-table th {
             background: #f7fafc;
             font-weight: 600;
         }
-        
+
         .payslip h4 {
             font-size: 12px;
             margin: 12px 0 6px 0;
             color: #333;
             font-weight: 600;
         }
-        
+
         /* COMPACT FOOTER */
         .payslip-footer {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
@@ -380,7 +380,7 @@
             font-size: 9px;
             line-height: 1.4;
         }
-        
+
         @media (min-width: 768px) {
             .payslip-footer {
                 margin: 15px -25px -20px -25px;
@@ -388,11 +388,11 @@
                 font-size: 10px;
             }
         }
-        
+
         .payslip-footer p {
             margin: 0;
         }
-        
+
         /* COMPACT NET SALARY BOX */
         .net-salary-box {
             text-align: center;
@@ -402,43 +402,43 @@
             border-radius: 8px;
             color: white;
         }
-        
+
         .net-salary-box h3 {
             font-size: 16px;
             margin-bottom: 4px;
             font-weight: 600;
         }
-        
+
         .net-salary-box p {
             font-size: 11px;
             opacity: 0.95;
             margin: 0;
         }
-        
+
         .alert {
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-size: 13px;
         }
-        
+
         @media (min-width: 768px) {
             .alert {
                 padding: 15px;
                 font-size: 14px;
             }
         }
-        
+
         .alert-success {
             background: #c6f6d5;
             color: #22543d;
         }
-        
+
         .alert-info {
             background: #bee3f8;
             color: #2c5282;
         }
-        
+
         .calc-mode {
             display: flex;
             gap: 10px;
@@ -448,28 +448,28 @@
             border-radius: 8px;
             flex-wrap: wrap;
         }
-        
+
         .calc-mode label {
             display: flex;
             align-items: center;
             gap: 5px;
             cursor: pointer;
         }
-        
+
         /* PRINT OPTIMIZATION FOR PDF */
         @media print {
-            body { 
+            body {
                 background: white;
                 padding: 0;
             }
-            .container, .modal-content { 
+            .container, .modal-content {
                 box-shadow: none;
                 padding: 0;
                 border-radius: 0;
                 margin: 0;
                 max-width: 100%;
             }
-            .tabs, .btn, .card-actions, .modal-header { 
+            .tabs, .btn, .card-actions, .modal-header {
                 display: none !important;
             }
             .payslip {
@@ -504,75 +504,80 @@
 </head>
 <body>
     <div class="container">
-        <h1>💼 Vamsi's Payroll Manager</h1>
+        <h1>💼 Vamsi's Payroll Manager.!</h1>
         <p class="subtitle">Professional Payroll Management System</p>
-        
+
         <div class="alert alert-info">
             <strong>📌 Quick Start:</strong> Add Company → Add Employees → Generate Payslips → Download PDF
         </div>
-        
+
         <div class="tabs">
             <button class="tab active" onclick="showTab('companies')">🏢 Companies</button>
             <button class="tab" onclick="showTab('employees')">👥 Employees</button>
             <button class="tab" onclick="showTab('generate')">💰 Generate Payslip</button>
             <button class="tab" onclick="showTab('view')">📄 View Payslips</button>
         </div>
-        
-        <!-- Companies Tab -->
+		
+		        <!-- Companies Tab -->
         <div id="companies" class="tab-content active">
             <h2>Add Company</h2>
             <form id="companyForm">
                 <div class="form-group">
                     <label>Company Name *</label>
-                    <input type="text" id="compName" required>
+                    <input type="text" id="compName" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>Address *</label>
                     <textarea id="compAddress" rows="3" required></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label>PAN (Optional)</label>
-                    <input type="text" id="compPAN" placeholder="ABCDE1234F">
+                    <input type="text" id="compPAN" placeholder="ABCDE1234F" />
                 </div>
-                
+
                 <div class="form-group">
                     <label>TAN (Optional)</label>
-                    <input type="text" id="compTAN" placeholder="ABCD12345E">
+                    <input type="text" id="compTAN" placeholder="ABCD12345E" />
                 </div>
-                
+
+                <div class="form-group">
+                    <label>Upload Logo (Optional)</label>
+                    <input type="file" id="compLogo" accept="image/*" />
+                </div>
+
                 <button type="submit" class="btn btn-primary">➕ Add Company</button>
             </form>
-            
+
             <h2 style="margin-top: 30px;">Company List</h2>
             <div id="companyList" class="card-list"></div>
         </div>
-        
+
         <!-- Employees Tab -->
         <div id="employees" class="tab-content">
             <h2>Add Employee</h2>
             <form id="employeeForm">
                 <div class="form-group">
                     <label>Employee Name *</label>
-                    <input type="text" id="empName" required>
+                    <input type="text" id="empName" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>Employee ID *</label>
-                    <input type="text" id="empId" required>
+                    <input type="text" id="empId" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>Date of Joining *</label>
-                    <input type="date" id="empDOJ" required>
+                    <input type="date" id="empDOJ" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>Designation *</label>
-                    <input type="text" id="empDesignation" placeholder="e.g., Senior Manager" required>
+                    <input type="text" id="empDesignation" placeholder="e.g., Senior Manager" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>Department *</label>
                     <select id="empDepartment" required>
@@ -584,44 +589,59 @@
                         <option value="Operations">Operations</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Basic Salary (₹) *</label>
-                    <input type="number" id="empSalary" required>
+                    <input type="number" id="empSalary" required />
                 </div>
-                
+
                 <div class="form-group">
                     <label>PAN Number (Optional)</label>
-                    <input type="text" id="empPAN" placeholder="ABCDE1234F">
+                    <input type="text" id="empPAN" placeholder="ABCDE1234F" />
                 </div>
-                
+
+                <div class="form-group">
+                    <label>EPF Number (Optional)</label>
+                    <input type="text" id="empEPF" placeholder="MH/XXXX/XXXX" />
+                </div>
+
+                <div class="form-group">
+                    <label>UAN Number (Optional)</label>
+                    <input type="text" id="empUAN" placeholder="12DigitUAN" />
+                </div>
+
+                <div class="form-group">
+                    <label>ESI Number (Optional)</label>
+                    <input type="text" id="empESI" placeholder="8DigitESINumber" />
+                </div>
+
                 <div class="form-group">
                     <label>Bank Account (Optional)</label>
-                    <input type="text" id="empBank" placeholder="Account Number">
+                    <input type="text" id="empBank" placeholder="Account Number" />
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary">➕ Add Employee</button>
             </form>
-            
+
             <h2 style="margin-top: 30px;">Employee List</h2>
             <div id="employeeList" class="card-list"></div>
         </div>
-        
+
         <!-- Generate Payslip Tab -->
         <div id="generate" class="tab-content">
             <h2>Generate Payslip</h2>
-            
+
             <div class="calc-mode">
                 <label>
-                    <input type="radio" name="calcMode" value="auto" checked onchange="toggleCalcMode()">
+                    <input type="radio" name="calcMode" value="auto" checked onchange="toggleCalcMode()" />
                     🤖 Auto Calculate (Recommended)
                 </label>
                 <label>
-                    <input type="radio" name="calcMode" value="manual" onchange="toggleCalcMode()">
+                    <input type="radio" name="calcMode" value="manual" onchange="toggleCalcMode()" />
                     ✍️ Manual Entry
                 </label>
             </div>
-            
+
             <form id="payslipForm">
                 <div class="form-group">
                     <label>Select Company *</label>
@@ -629,96 +649,96 @@
                         <option value="">Select Company</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Select Employee *</label>
                     <select id="selectEmployee" required>
                         <option value="">Select Employee</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Month & Year *</label>
-                    <input type="month" id="payMonth" required>
+                    <input type="month" id="payMonth" required />
                 </div>
-                
+
                 <div id="autoFields">
                     <div class="form-group">
                         <label>Working Days *</label>
-                        <input type="number" id="workingDays" value="26" min="1" max="31" required>
+                        <input type="number" id="workingDays" value="26" min="1" max="31" required />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Paid Days *</label>
-                        <input type="number" id="paidDays" value="26" min="0" max="31" required>
+                        <input type="number" id="paidDays" value="26" min="0" max="31" required />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>TDS Amount (₹)</label>
-                        <input type="number" id="tdsAmount" value="0" min="0">
+                        <input type="number" id="tdsAmount" value="0" min="0" />
                     </div>
                 </div>
-                
+
                 <div id="manualFields" style="display:none;">
                     <div class="form-group">
                         <label>Working Days *</label>
-                        <input type="number" id="manualWorkingDays" value="26" min="1" max="31">
+                        <input type="number" id="manualWorkingDays" value="26" min="1" max="31" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Paid Days *</label>
-                        <input type="number" id="manualPaidDays" value="26" min="0" max="31">
+                        <input type="number" id="manualPaidDays" value="26" min="0" max="31" />
                     </div>
-                    
+
                     <h3 style="margin-top: 20px;">Earnings</h3>
                     <div class="form-group">
                         <label>Basic Salary (₹)</label>
-                        <input type="number" id="manualBasic" value="0" step="0.01">
+                        <input type="number" id="manualBasic" value="0" step="0.01" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>HRA (₹)</label>
-                        <input type="number" id="manualHRA" value="0" step="0.01">
+                        <input type="number" id="manualHRA" value="0" step="0.01" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>DA (₹)</label>
-                        <input type="number" id="manualDA" value="0" step="0.01">
+                        <input type="number" id="manualDA" value="0" step="0.01" />
                     </div>
-                    
+
                     <h3 style="margin-top: 20px;">Deductions</h3>
                     <div class="form-group">
                         <label>PF (₹)</label>
-                        <input type="number" id="manualPF" value="0" step="0.01">
+                        <input type="number" id="manualPF" value="0" step="0.01" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Professional Tax (₹)</label>
-                        <input type="number" id="manualProfTax" value="200" step="0.01">
+                        <input type="number" id="manualProfTax" value="200" step="0.01" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>TDS (₹)</label>
-                        <input type="number" id="manualTDS" value="0" step="0.01">
+                        <input type="number" id="manualTDS" value="0" step="0.01" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>LOP Deduction (₹)</label>
-                        <input type="number" id="manualLOP" value="0" step="0.01">
+                        <input type="number" id="manualLOP" value="0" step="0.01" />
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn btn-success">💰 Generate Payslip</button>
             </form>
         </div>
-        
+
         <!-- View Payslips Tab -->
         <div id="view" class="tab-content">
             <h2>Generated Payslips</h2>
             <div id="payslipView" class="card-list"></div>
         </div>
     </div>
-    
+
     <!-- Payslip Modal -->
     <div id="payslipModal" class="modal">
         <div class="modal-content">
@@ -736,498 +756,530 @@
             </div>
         </div>
     </div>
+<script>
+    // Data storage
+    let companies = JSON.parse(localStorage.getItem('companies')) || [];
+    let employees = JSON.parse(localStorage.getItem('employees')) || [];
+    let payslips = JSON.parse(localStorage.getItem('payslips')) || [];
+    let currentPayslipData = null;
 
-    <script>
-        // Data storage
-        let companies = JSON.parse(localStorage.getItem('companies')) || [];
-        let employees = JSON.parse(localStorage.getItem('employees')) || [];
-        let payslips = JSON.parse(localStorage.getItem('payslips')) || [];
-        let currentPayslipData = null;
-        
-        // Tab switching
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-            
-            if (tabName === 'generate') {
-                updateCompanySelect();
-                updateEmployeeSelect();
-            }
-            if (tabName === 'view') displayPayslips();
+    // Tab switching
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+
+        if (tabName === 'generate') {
+            updateCompanySelect();
+            updateEmployeeSelect();
         }
-        
-        // Toggle calculation mode
-        function toggleCalcMode() {
-            const mode = document.querySelector('input[name="calcMode"]:checked').value;
-            document.getElementById('autoFields').style.display = mode === 'auto' ? 'block' : 'none';
-            document.getElementById('manualFields').style.display = mode === 'manual' ? 'block' : 'none';
+        if (tabName === 'view') displayPayslips();
+    }
+
+    // Toggle calculation mode
+    function toggleCalcMode() {
+        const mode = document.querySelector('input[name="calcMode"]:checked').value;
+        document.getElementById('autoFields').style.display = mode === 'auto' ? 'block' : 'none';
+        document.getElementById('manualFields').style.display = mode === 'manual' ? 'block' : 'none';
+    }
+
+    // Add company
+    document.getElementById('companyForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('compLogo');
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                addCompany(event.target.result);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            addCompany(null);
         }
-        
-        // Add company
-        document.getElementById('companyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+
+        function addCompany(logoDataUrl) {
             const company = {
                 name: document.getElementById('compName').value,
                 address: document.getElementById('compAddress').value,
                 pan: document.getElementById('compPAN').value || '',
-                tan: document.getElementById('compTAN').value || ''
+                tan: document.getElementById('compTAN').value || '',
+                logo: logoDataUrl || ''
             };
-            
+
             companies.push(company);
             localStorage.setItem('companies', JSON.stringify(companies));
-            
-            this.reset();
+
+            document.getElementById('companyForm').reset();
             displayCompanies();
             alert('✅ Company added successfully!');
-        });
-        
-        // Display companies
-        function displayCompanies() {
-            const list = document.getElementById('companyList');
-            list.innerHTML = '';
-            
-            if (companies.length === 0) {
-                list.innerHTML = '<p style="text-align:center;color:#666;">No companies added yet</p>';
-                return;
-            }
-            
-            companies.forEach((comp, index) => {
-                list.innerHTML += `
-                    <div class="card">
-                        <div class="card-info">
+        }
+    });
+
+    // Display companies
+    function displayCompanies() {
+        const list = document.getElementById('companyList');
+        list.innerHTML = '';
+
+        if (companies.length === 0) {
+            list.innerHTML = '<p style="text-align:center;color:#666;">No companies added yet</p>';
+            return;
+        }
+
+        companies.forEach((comp, index) => {
+            list.innerHTML += `
+                <div class="card">
+                    <div class="card-info" style="display:flex; align-items:center; gap:10px;">
+                        ${comp.logo ? `<img src="${comp.logo}" alt="Logo" style="width:50px; height:50px; object-fit:contain; border-radius:8px;"/>` : ''}
+                        <div>
                             <h3>${comp.name}</h3>
                             <p>${comp.address}</p>
                             ${comp.pan ? `<p>PAN: ${comp.pan}</p>` : ''}
                             ${comp.tan ? `<p>TAN: ${comp.tan}</p>` : ''}
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-danger" onclick="deleteCompany(${index})">🗑️ Delete</button>
-                        </div>
                     </div>
-                `;
-            });
-        }
-        
-        // Delete company
-        function deleteCompany(index) {
-            if (confirm('Delete this company?')) {
-                companies.splice(index, 1);
-                localStorage.setItem('companies', JSON.stringify(companies));
-                displayCompanies();
-            }
-        }
-        
-        // Add employee
-        document.getElementById('employeeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const employee = {
-                id: document.getElementById('empId').value,
-                name: document.getElementById('empName').value,
-                doj: document.getElementById('empDOJ').value,
-                designation: document.getElementById('empDesignation').value,
-                department: document.getElementById('empDepartment').value,
-                basicSalary: parseFloat(document.getElementById('empSalary').value),
-                pan: document.getElementById('empPAN').value || '',
-                bank: document.getElementById('empBank').value || ''
-            };
-            
-            employees.push(employee);
-            localStorage.setItem('employees', JSON.stringify(employees));
-            
-            this.reset();
-            displayEmployees();
-            alert('✅ Employee added successfully!');
-        });
-        
-        // Display employees
-        function displayEmployees() {
-            const list = document.getElementById('employeeList');
-            list.innerHTML = '';
-            
-            if (employees.length === 0) {
-                list.innerHTML = '<p style="text-align:center;color:#666;">No employees added yet</p>';
-                return;
-            }
-            
-            employees.forEach((emp, index) => {
-                list.innerHTML += `
-                    <div class="card">
-                        <div class="card-info">
-                            <h3>${emp.name} (${emp.id})</h3>
-                            <p>${emp.designation} | ${emp.department}</p>
-                            <p>DOJ: ${emp.doj} | Salary: ₹${emp.basicSalary.toLocaleString()}</p>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn btn-danger" onclick="deleteEmployee(${index})">🗑️ Delete</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-        
-        // Delete employee
-        function deleteEmployee(index) {
-            if (confirm('Delete this employee?')) {
-                employees.splice(index, 1);
-                localStorage.setItem('employees', JSON.stringify(employees));
-                displayEmployees();
-            }
-        }
-        
-        // Update selects
-        function updateCompanySelect() {
-            const select = document.getElementById('selectCompany');
-            select.innerHTML = '<option value="">Select Company</option>';
-            companies.forEach((comp, index) => {
-                select.innerHTML += `<option value="${index}">${comp.name}</option>`;
-            });
-        }
-        
-        function updateEmployeeSelect() {
-            const select = document.getElementById('selectEmployee');
-            select.innerHTML = '<option value="">Select Employee</option>';
-            employees.forEach((emp, index) => {
-                select.innerHTML += `<option value="${index}">${emp.id} - ${emp.name}</option>`;
-            });
-        }
-        
-        // Generate payslip
-        document.getElementById('payslipForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const compIndex = document.getElementById('selectCompany').value;
-            const empIndex = document.getElementById('selectEmployee').value;
-            
-            if (compIndex === '' || empIndex === '') {
-                alert('Please select company and employee');
-                return;
-            }
-            
-            const company = companies[compIndex];
-            const emp = employees[empIndex];
-            const month = document.getElementById('payMonth').value;
-            const mode = document.querySelector('input[name="calcMode"]:checked').value;
-            
-            const [year, monthNum] = month.split('-');
-            const totalDays = new Date(year, monthNum, 0).getDate();
-            
-            let payslip;
-            
-            if (mode === 'auto') {
-                const workingDays = parseInt(document.getElementById('workingDays').value);
-                const paidDays = parseInt(document.getElementById('paidDays').value);
-                const tds = parseFloat(document.getElementById('tdsAmount').value) || 0;
-                
-                const basic = emp.basicSalary;
-                const hra = basic * 0.4;
-                const da = basic * 0.2;
-                const gross = basic + hra + da;
-                
-                const pf = basic * 0.12;
-                const profTax = 200;
-                
-                const lopDays = workingDays - paidDays;
-                const perDay = basic / totalDays;
-                const lopDeduction = lopDays * perDay;
-                
-                const totalDeductions = pf + profTax + tds + lopDeduction;
-                const net = gross - totalDeductions;
-                
-                payslip = {
-                    company, employee: emp, month, 
-                    monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
-                    totalDays, workingDays, paidDays, lopDays,
-                    basic, hra, da, gross,
-                    pf, profTax, tds, lopDeduction, totalDeductions, net,
-                    generatedDate: new Date().toLocaleString()
-                };
-            } else {
-                const workingDays = parseInt(document.getElementById('manualWorkingDays').value);
-                const paidDays = parseInt(document.getElementById('manualPaidDays').value);
-                const basic = parseFloat(document.getElementById('manualBasic').value);
-                const hra = parseFloat(document.getElementById('manualHRA').value);
-                const da = parseFloat(document.getElementById('manualDA').value);
-                const pf = parseFloat(document.getElementById('manualPF').value);
-                const profTax = parseFloat(document.getElementById('manualProfTax').value);
-                const tds = parseFloat(document.getElementById('manualTDS').value);
-                const lopDeduction = parseFloat(document.getElementById('manualLOP').value);
-                
-                const gross = basic + hra + da;
-                const totalDeductions = pf + profTax + tds + lopDeduction;
-                const net = gross - totalDeductions;
-                const lopDays = workingDays - paidDays;
-                
-                payslip = {
-                    company, employee: emp, month,
-                    monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
-                    totalDays, workingDays, paidDays, lopDays,
-                    basic, hra, da, gross,
-                    pf, profTax, tds, lopDeduction, totalDeductions, net,
-                    generatedDate: new Date().toLocaleString()
-                };
-            }
-            
-            payslips.push(payslip);
-            localStorage.setItem('payslips', JSON.stringify(payslips));
-            
-            alert('✅ Payslip generated successfully!');
-            showTab('view');
-            displayPayslips();
-        });
-        
-        // Display payslips as summary cards
-        function displayPayslips() {
-            const view = document.getElementById('payslipView');
-            view.innerHTML = '';
-            
-            if (payslips.length === 0) {
-                view.innerHTML = '<p style="text-align:center;color:#666;">No payslips generated yet</p>';
-                return;
-            }
-            
-            payslips.slice().reverse().forEach((slip, index) => {
-                const actualIndex = payslips.length - 1 - index;
-                view.innerHTML += `
-                    <div class="card">
-                        <div class="card-info">
-                            <h3>${slip.employee.name} - ${slip.monthName}</h3>
-                            <p><strong>Company:</strong> ${slip.company.name}</p>
-                            <p><strong>Designation:</strong> ${slip.employee.designation} | ${slip.employee.department}</p>
-                            <p><strong>Net Salary:</strong> ₹${slip.net.toFixed(2)}</p>
-                            <p style="font-size:12px;color:#999;">Generated: ${slip.generatedDate}</p>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn btn-primary" onclick="viewPayslip(${actualIndex})">👁️ View</button>
-                            <button class="btn btn-info" onclick="quickDownloadPDF(${actualIndex})">📥 Download</button>
-                            <button class="btn btn-danger" onclick="deletePayslip(${actualIndex})">🗑️ Delete</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-        
-        // View payslip in modal
-        function viewPayslip(index) {
-            const slip = payslips[index];
-            currentPayslipData = {slip, filename: `${slip.employee.name}_${slip.monthName}`};
-            
-            const content = generatePayslipHTML(slip);
-            document.getElementById('payslipContent').innerHTML = content;
-            document.getElementById('payslipModal').classList.add('active');
-        }
-        
-        // Close modal
-        function closeModal() {
-            document.getElementById('payslipModal').classList.remove('active');
-            currentPayslipData = null;
-        }
-        
-        // Generate payslip HTML (COMPACT VERSION)
-        function generatePayslipHTML(slip) {
-            return `
-                <div class="payslip" id="currentPayslip">
-                    <div class="payslip-header">
-                        <h2>${slip.company.name}</h2>
-                        <p>${slip.company.address}</p>
-                        ${slip.company.pan ? `<p>PAN: ${slip.company.pan}</p>` : ''}
-                        ${slip.company.tan ? `<p>TAN: ${slip.company.tan}</p>` : ''}
-                        <h3>SALARY SLIP - ${slip.monthName}</h3>
-                    </div>
-                    
-                    <h4>Employee Information</h4>
-                    <table class="payslip-table">
-                        <tr>
-                            <td style="width:25%;"><strong>Employee Name:</strong></td>
-                            <td style="width:25%;">${slip.employee.name}</td>
-                            <td style="width:25%;"><strong>Employee ID:</strong></td>
-                            <td style="width:25%;">${slip.employee.id}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Designation:</strong></td>
-                            <td>${slip.employee.designation}</td>
-                            <td><strong>Department:</strong></td>
-                            <td>${slip.employee.department}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Date of Joining:</strong></td>
-                            <td>${slip.employee.doj}</td>
-                            <td><strong>PAN:</strong></td>
-                            <td>${slip.employee.pan || '-'}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Bank A/C:</strong></td>
-                            <td colspan="3">${slip.employee.bank || '-'}</td>
-                        </tr>
-                    </table>
-                    
-                    <h4>Attendance Details</h4>
-                    <table class="payslip-table">
-                        <tr>
-                            <td style="width:25%;">Total: <strong>${slip.totalDays}</strong></td>
-                            <td style="width:25%;">Working: <strong>${slip.workingDays}</strong></td>
-                            <td style="width:25%;">Paid: <strong>${slip.paidDays}</strong></td>
-                            <td style="width:25%;">LOP: <strong>${slip.lopDays}</strong></td>
-                        </tr>
-                    </table>
-                    
-                    <h4>Earnings & Deductions</h4>
-                    <table class="payslip-table">
-                        <thead>
-                            <tr>
-                                <th style="width:40%;">Earnings</th>
-                                <th style="width:10%;text-align:right;">Amount (₹)</th>
-                                <th style="width:40%;">Deductions</th>
-                                <th style="width:10%;text-align:right;">Amount (₹)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Basic Salary</td>
-                                <td style="text-align:right;">${slip.basic.toFixed(2)}</td>
-                                <td>Provident Fund</td>
-                                <td style="text-align:right;">${slip.pf.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td>HRA</td>
-                                <td style="text-align:right;">${slip.hra.toFixed(2)}</td>
-                                <td>Professional Tax</td>
-                                <td style="text-align:right;">${slip.profTax.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td>DA</td>
-                                <td style="text-align:right;">${slip.da.toFixed(2)}</td>
-                                <td>TDS</td>
-                                <td style="text-align:right;">${slip.tds.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>LOP Deduction</td>
-                                <td style="text-align:right;">${slip.lopDeduction.toFixed(2)}</td>
-                            </tr>
-                            <tr style="background:#f7fafc;font-weight:bold;">
-                                <td>GROSS SALARY</td>
-                                <td style="text-align:right;">₹${slip.gross.toFixed(2)}</td>
-                                <td>TOTAL DEDUCTIONS</td>
-                                <td style="text-align:right;">₹${slip.totalDeductions.toFixed(2)}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="net-salary-box">
-                        <h3>NET SALARY: ₹${slip.net.toFixed(2)}</h3>
-                        <p>${numberToWords(slip.net)} Rupees Only</p>
-                    </div>
-                    
-                    <div class="payslip-footer">
-                        <p><strong>This is a system-generated payslip and does not require a physical signature.</strong></p>
+                    <div class="card-actions">
+                        <button class="btn btn-danger" onclick="deleteCompany(${index})">🗑️ Delete</button>
                     </div>
                 </div>
             `;
+        });
+    }
+
+    // Delete company
+    function deleteCompany(index) {
+        if (confirm('Delete this company?')) {
+            companies.splice(index, 1);
+            localStorage.setItem('companies', JSON.stringify(companies));
+            displayCompanies();
         }
-        
-        // Download current payslip from modal
-        function downloadCurrentPDF() {
-            if (!currentPayslipData) return;
-            
-            const element = document.getElementById('currentPayslip');
-            const buttons = element.parentElement.nextElementSibling;
-            buttons.style.display = 'none';
-            
-            const opt = {
-                margin: [5, 5, 5, 5],
-                filename: currentPayslipData.filename.replace(/\s+/g, '_') + '.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2,
-                    useCORS: true,
-                    letterRendering: true,
-                    logging: false
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            html2pdf().set(opt).from(element).save().then(() => {
-                buttons.style.display = 'flex';
-            });
-        }
-        
-        // FIXED: Quick download from card
-        function quickDownloadPDF(index) {
-            const slip = payslips[index];
-            
-            // Create temporary container
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = generatePayslipHTML(slip);
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.left = '-9999px';
-            tempDiv.style.top = '0';
-            document.body.appendChild(tempDiv);
-            
-            const filename = `${slip.employee.name}_${slip.monthName}`.replace(/\s+/g, '_');
-            
-            const opt = {
-                margin: [5, 5, 5, 5],
-                filename: filename + '.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2,
-                    useCORS: true,
-                    letterRendering: true,
-                    logging: false
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            const payslipElement = tempDiv.querySelector('.payslip');
-            
-            html2pdf().set(opt).from(payslipElement).save().then(() => {
-                document.body.removeChild(tempDiv);
-            }).catch((error) => {
-                console.error('PDF generation error:', error);
-                document.body.removeChild(tempDiv);
-                alert('Error generating PDF. Please try viewing the payslip and downloading from there.');
-            });
-        }
-        
-        // Delete payslip
-        function deletePayslip(index) {
-            if (confirm('Delete this payslip?')) {
-                payslips.splice(index, 1);
-                localStorage.setItem('payslips', JSON.stringify(payslips));
-                displayPayslips();
-            }
-        }
-        
-        // Number to words
-        function numberToWords(num) {
-            if (num === 0) return 'Zero';
-            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-            const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-            
-            num = Math.floor(num);
-            
-            if (num < 10) return ones[num];
-            if (num < 20) return teens[num - 10];
-            if (num < 100) return tens[Math.floor(num / 10)] + ' ' + ones[num % 10];
-            if (num < 1000) return ones[Math.floor(num / 100)] + ' Hundred ' + numberToWords(num % 100);
-            if (num < 100000) return numberToWords(Math.floor(num / 1000)) + ' Thousand ' + numberToWords(num % 1000);
-            return numberToWords(Math.floor(num / 100000)) + ' Lakh ' + numberToWords(num % 100000);
-        }
-        
-        // Initialize
-        displayCompanies();
+    }
+
+    // Add employee
+    document.getElementById('employeeForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const employee = {
+            id: document.getElementById('empId').value,
+            name: document.getElementById('empName').value,
+            doj: document.getElementById('empDOJ').value,
+            designation: document.getElementById('empDesignation').value,
+            department: document.getElementById('empDepartment').value,
+            basicSalary: parseFloat(document.getElementById('empSalary').value),
+            pan: document.getElementById('empPAN').value || '',
+            epf: document.getElementById('empEPF').value || '',
+            uan: document.getElementById('empUAN').value || '',
+            esi: document.getElementById('empESI').value || '',
+            bank: document.getElementById('empBank').value || ''
+        };
+
+        employees.push(employee);
+        localStorage.setItem('employees', JSON.stringify(employees));
+
+        this.reset();
         displayEmployees();
-        
-        const today = new Date();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const year = today.getFullYear();
-        document.getElementById('payMonth').value = `${year}-${month}`;
-    </script>
+        alert('✅ Employee added successfully!');
+    });
+
+    // Display employees
+    function displayEmployees() {
+        const list = document.getElementById('employeeList');
+        list.innerHTML = '';
+
+        if (employees.length === 0) {
+            list.innerHTML = '<p style="text-align:center;color:#666;">No employees added yet</p>';
+            return;
+        }
+
+        employees.forEach((emp, index) => {
+            list.innerHTML += `
+                <div class="card">
+                    <div class="card-info">
+                        <h3>${emp.name} (${emp.id})</h3>
+                        <p>${emp.designation} | ${emp.department}</p>
+                        <p>DOJ: ${emp.doj} | Salary: ₹${emp.basicSalary.toLocaleString()}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-danger" onclick="deleteEmployee(${index})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Delete employee
+    function deleteEmployee(index) {
+        if (confirm('Delete this employee?')) {
+            employees.splice(index, 1);
+            localStorage.setItem('employees', JSON.stringify(employees));
+            displayEmployees();
+        }
+    }
+
+    // Update company dropdown for payslip
+    function updateCompanySelect() {
+        const select = document.getElementById('selectCompany');
+        select.innerHTML = '<option value="">Select Company</option>';
+        companies.forEach((comp, index) => {
+            select.innerHTML += `<option value="${index}">${comp.name}</option>`;
+        });
+    }
+
+    // Update employee dropdown for payslip
+    function updateEmployeeSelect() {
+        const select = document.getElementById('selectEmployee');
+        select.innerHTML = '<option value="">Select Employee</option>';
+        employees.forEach((emp, index) => {
+            select.innerHTML += `<option value="${index}">${emp.id} - ${emp.name}</option>`;
+        });
+    }
+
+    // Generate payslip form submit
+    document.getElementById('payslipForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const compIndex = document.getElementById('selectCompany').value;
+        const empIndex = document.getElementById('selectEmployee').value;
+
+        if (compIndex === '' || empIndex === '') {
+            alert('Please select company and employee');
+            return;
+        }
+
+        const company = companies[compIndex];
+        const emp = employees[empIndex];
+        const month = document.getElementById('payMonth').value;
+        const mode = document.querySelector('input[name="calcMode"]:checked').value;
+
+        const [year, monthNum] = month.split('-');
+        const totalDays = new Date(year, monthNum, 0).getDate();
+
+        let payslip;
+
+        if (mode === 'auto') {
+            const workingDays = parseInt(document.getElementById('workingDays').value);
+            const paidDays = parseInt(document.getElementById('paidDays').value);
+            const tds = parseFloat(document.getElementById('tdsAmount').value) || 0;
+
+            const basic = emp.basicSalary;
+            const hra = basic * 0.4;
+            const da = basic * 0.2;
+            const gross = basic + hra + da;
+
+            const pf = emp.epf ? basic * 0.12 : 0;
+            const profTax = 200;
+
+            const lopDays = workingDays - paidDays;
+            const perDay = basic / totalDays;
+            const lopDeduction = lopDays * perDay;
+
+            const totalDeductions = pf + profTax + tds + lopDeduction;
+            const net = gross - totalDeductions;
+
+            payslip = {
+                company, employee: emp, month,
+                monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
+                totalDays, workingDays, paidDays, lopDays,
+                basic, hra, da, gross,
+                pf, profTax, tds, lopDeduction, totalDeductions, net,
+                generatedDate: new Date().toLocaleString()
+            };
+        } else {
+            const workingDays = parseInt(document.getElementById('manualWorkingDays').value);
+            const paidDays = parseInt(document.getElementById('manualPaidDays').value);
+            const basic = parseFloat(document.getElementById('manualBasic').value);
+            const hra = parseFloat(document.getElementById('manualHRA').value);
+            const da = parseFloat(document.getElementById('manualDA').value);
+            const pf = parseFloat(document.getElementById('manualPF').value);
+            const profTax = parseFloat(document.getElementById('manualProfTax').value);
+            const tds = parseFloat(document.getElementById('manualTDS').value);
+            const lopDeduction = parseFloat(document.getElementById('manualLOP').value);
+
+            const gross = basic + hra + da;
+            const totalDeductions = pf + profTax + tds + lopDeduction;
+            const net = gross - totalDeductions;
+            const lopDays = workingDays - paidDays;
+
+            payslip = {
+                company, employee: emp, month,
+                monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
+                totalDays, workingDays, paidDays, lopDays,
+                basic, hra, da, gross,
+                pf, profTax, tds, lopDeduction, totalDeductions, net,
+                generatedDate: new Date().toLocaleString()
+            };
+        }
+
+        payslips.push(payslip);
+        localStorage.setItem('payslips', JSON.stringify(payslips));
+
+        alert('✅ Payslip generated successfully!');
+        showTab('view');
+        displayPayslips();
+    });
+
+    // Display payslips as summary cards
+    function displayPayslips() {
+        const view = document.getElementById('payslipView');
+        view.innerHTML = '';
+
+        if (payslips.length === 0) {
+            view.innerHTML = '<p style="text-align:center;color:#666;">No payslips generated yet</p>';
+            return;
+        }
+
+        payslips.slice().reverse().forEach((slip, index) => {
+            const actualIndex = payslips.length - 1 - index;
+            view.innerHTML += `
+                <div class="card">
+                    <div class="card-info">
+                        <h3>${slip.employee.name} - ${slip.monthName}</h3>
+                        <p><strong>Company:</strong> ${slip.company.name}</p>
+                        <p><strong>Designation:</strong> ${slip.employee.designation} | ${slip.employee.department}</p>
+                        <p><strong>Net Salary:</strong> ₹${slip.net.toFixed(2)}</p>
+                        <p style="font-size:12px;color:#999;">Generated: ${slip.generatedDate}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="viewPayslip(${actualIndex})">👁️ View</button>
+                        <button class="btn btn-info" onclick="quickDownloadPDF(${actualIndex})">📥 Download</button>
+                        <button class="btn btn-danger" onclick="deletePayslip(${actualIndex})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // View payslip in modal
+    function viewPayslip(index) {
+        const slip = payslips[index];
+        currentPayslipData = { slip, filename: `${slip.employee.name}_${slip.monthName}` };
+
+        const content = generatePayslipHTML(slip);
+        document.getElementById('payslipContent').innerHTML = content;
+        document.getElementById('payslipModal').classList.add('active');
+    }
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('payslipModal').classList.remove('active');
+        currentPayslipData = null;
+    }
+
+    // Generate payslip HTML (compact)
+    function generatePayslipHTML(slip) {
+        return `
+            <div class="payslip" id="currentPayslip">
+                <div class="payslip-header">
+                    ${slip.company.logo ? `<img src="${slip.company.logo}" alt="Logo" style="max-height:50px; margin-bottom:5px;"/>` : ''}
+                    <h2>${slip.company.name}</h2>
+                    <p>${slip.company.address}</p>
+                    ${slip.company.pan ? `<p>PAN: ${slip.company.pan}</p>` : ''}
+                    ${slip.company.tan ? `<p>TAN: ${slip.company.tan}</p>` : ''}
+                    <h3>SALARY SLIP - ${slip.monthName}</h3>
+                </div>
+
+                <h4>Employee Information</h4>
+                <table class="payslip-table">
+                    <tr>
+                        <td style="width:25%;"><strong>Employee Name:</strong></td>
+                        <td style="width:25%;">${slip.employee.name}</td>
+                        <td style="width:25%;"><strong>Employee ID:</strong></td>
+                        <td style="width:25%;">${slip.employee.id}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Designation:</strong></td>
+                        <td>${slip.employee.designation}</td>
+                        <td><strong>Department:</strong></td>
+                        <td>${slip.employee.department}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date of Joining:</strong></td>
+                        <td>${slip.employee.doj}</td>
+                        <td><strong>PAN:</strong></td>
+                        <td>${slip.employee.pan || '-'}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EPF Number:</strong></td>
+                        <td>${slip.employee.epf || '-'}</td>
+                        <td><strong>UAN Number:</strong></td>
+                        <td>${slip.employee.uan || '-'}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ESI Number:</strong></td>
+                        <td>${slip.employee.esi || '-'}</td>
+                        <td><strong>Bank A/C:</strong></td>
+                        <td>${slip.employee.bank || '-'}</td>
+                    </tr>
+                </table>
+
+                <h4>Attendance Details</h4>
+                <table class="payslip-table">
+                    <tr>
+                        <td style="width:25%;">Total: <strong>${slip.totalDays}</strong></td>
+                        <td style="width:25%;">Working: <strong>${slip.workingDays}</strong></td>
+                        <td style="width:25%;">Paid: <strong>${slip.paidDays}</strong></td>
+                        <td style="width:25%;">LOP: <strong>${slip.lopDays}</strong></td>
+                    </tr>
+                </table>
+
+                <h4>Earnings & Deductions</h4>
+                <table class="payslip-table">
+                    <thead>
+                        <tr>
+                            <th style="width:40%;">Earnings</th>
+                            <th style="width:10%;text-align:right;">Amount (₹)</th>
+                            <th style="width:40%;">Deductions</th>
+                            <th style="width:10%;text-align:right;">Amount (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic Salary</td>
+                            <td style="text-align:right;">${slip.basic.toFixed(2)}</td>
+                            <td>Provident Fund</td>
+                            <td style="text-align:right;">${slip.pf.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>HRA</td>
+                            <td style="text-align:right;">${slip.hra.toFixed(2)}</td>
+                            <td>Professional Tax</td>
+                            <td style="text-align:right;">${slip.profTax.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>DA</td>
+                            <td style="text-align:right;">${slip.da.toFixed(2)}</td>
+                            <td>TDS</td>
+                            <td style="text-align:right;">${slip.tds.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>LOP Deduction</td>
+                            <td style="text-align:right;">${slip.lopDeduction.toFixed(2)}</td>
+                        </tr>
+                        <tr style="background:#f7fafc;font-weight:bold;">
+                            <td>GROSS SALARY</td>
+                            <td style="text-align:right;">₹${slip.gross.toFixed(2)}</td>
+                            <td>TOTAL DEDUCTIONS</td>
+                            <td style="text-align:right;">₹${slip.totalDeductions.toFixed(2)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="net-salary-box">
+                    <h3>NET SALARY: ₹${slip.net.toFixed(2)}</h3>
+                    <p>${numberToWords(slip.net)} Rupees Only</p>
+                </div>
+
+                <div class="payslip-footer">
+                    <p><strong>This is a system-generated payslip and does not require a physical signature.</strong></p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Download current payslip from modal
+    function downloadCurrentPDF() {
+        if (!currentPayslipData) return;
+
+        const element = document.getElementById('currentPayslip');
+        const buttons = element.parentElement.nextElementSibling;
+        buttons.style.display = 'none';
+
+        const opt = {
+            margin: [5, 5, 5, 5],
+            filename: currentPayslipData.filename.replace(/\s+/g, '_') + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                letterRendering: true,
+                logging: false
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            buttons.style.display = 'flex';
+        });
+    }
+
+    // Fixed: Quick download from card
+    function quickDownloadPDF(index) {
+        const slip = payslips[index];
+
+        // Create temporary container
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = generatePayslipHTML(slip);
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
+        tempDiv.style.top = '0';
+        document.body.appendChild(tempDiv);
+
+        const filename = `${slip.employee.name}_${slip.monthName}`.replace(/\s+/g, '_');
+
+        const opt = {
+            margin: [5, 5, 5, 5],
+            filename: filename + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                letterRendering: true,
+                logging: false
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        const payslipElement = tempDiv.querySelector('.payslip');
+
+        html2pdf().set(opt).from(payslipElement).save().then(() => {
+            document.body.removeChild(tempDiv);
+        }).catch((error) => {
+            console.error('PDF generation error:', error);
+            document.body.removeChild(tempDiv);
+            alert('Error generating PDF. Please try viewing the payslip and downloading from there.');
+        });
+    }
+
+    // Delete payslip
+    function deletePayslip(index) {
+        if (confirm('Delete this payslip?')) {
+            payslips.splice(index, 1);
+            localStorage.setItem('payslips', JSON.stringify(payslips));
+            displayPayslips();
+        }
+    }
+
+    // Number to words
+    function numberToWords(num) {
+        if (num === 0) return 'Zero';
+        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+
+        num = Math.floor(num);
+
+        if (num < 10) return ones[num];
+        if (num < 20) return teens[num - 10];
+        if (num < 100) return tens[Math.floor(num / 10)] + ' ' + ones[num % 10];
+        if (num < 1000) return ones[Math.floor(num / 100)] + ' Hundred ' + numberToWords(num % 100);
+        if (num < 100000) return numberToWords(Math.floor(num / 1000)) + ' Thousand ' + numberToWords(num % 1000);
+        return numberToWords(Math.floor(num / 100000)) + ' Lakh ' + numberToWords(num % 100000);
+    }
+
+    // Initialize on load
+    displayCompanies();
+    displayEmployees();
+
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    document.getElementById('payMonth').value = `${year}-${month}`;
+</script>
 </body>
 </html>
+
+
+
