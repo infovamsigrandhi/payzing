@@ -3,350 +3,283 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Payroll Manage</title>
+    <title>Payroll Manager Application!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 10px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 1.8em;
+    }
+    .subtitle {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    .tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #eee;
+        overflow-x: auto;
+        flex-wrap: wrap;
+    }
+    .tab {
+        padding: 12px 15px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 14px;
+        color: #666;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        white-space: nowrap;
+    }
+    .tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .tab-content { display: none; }
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .form-group { margin-bottom: 15px; }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border 0.3s;
+    }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 5px;
+    }
+    .btn-primary { background: #667eea; color: white; }
+    .btn-primary:hover {
+        background: #5568d3;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .btn-success { background: #48bb78; color: white; }
+    .btn-danger  { background: #f56565; color: white; }
+    .btn-info    { background: #4299e1; color: white; }
+    .btn-secondary { background: #a0aec0; color: white; }
+    .card-list { display: grid; gap: 15px; margin-top: 20px; }
+    .card { 
+        border: 2px solid #eee; 
+        border-radius: 10px; 
+        padding: 15px; 
+        transition: all 0.3s; 
+    }
+    .card:hover {
+        border-color: #667eea;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .card-info h3 { color: #333; margin-bottom: 5px; font-size: 16px; }
+    .card-info p { color: #666; font-size: 13px; margin-top: 5px; }
+    .card-actions { margin-top: 10px; display: flex; gap: 5px; flex-wrap: wrap; }
+    .modal { 
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgba(0,0,0,0.7); 
+    }
+    .modal.active { display: block; }
+    .modal-content {
+        background-color: white;
+        margin: 2% auto; 
+        padding: 0; 
+        width: 95%; 
+        max-width: 900px;
+        border-radius: 10px; 
+        max-height: 90vh; 
+        overflow-y: auto;
+    }
+    .modal-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white; 
+        padding: 20px;
+        border-radius: 10px 10px 0 0;
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center;
+    }
+    .modal-close { 
+        color: white; 
+        font-size: 28px; 
+        font-weight: bold; 
+        cursor: pointer; 
+        background: none; 
+        border: none;
+    }
+    .modal-close:hover { opacity: 0.8; }
+    .modal-body { padding: 20px; }
+    .payslip {
+        background: white; 
+        padding: 15px 20px; 
+        max-width: 100%; 
+        margin: 0 auto;
+        font-size: 11px; 
+        line-height: 1.3;
+    }
+    .payslip-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white; 
+        text-align: center;
+        padding: 12px 15px; 
+        margin: -15px -20px 12px -20px; 
+        border-radius: 0;
+    }
+    .payslip-header h2 { margin-bottom: 4px; font-size: 16px; font-weight: 600; }
+    .payslip-header p { font-size: 10px; opacity: 0.95; margin: 2px 0; line-height: 1.3; }
+    .payslip-header h3 { 
+        margin-top: 8px; 
+        font-size: 14px; 
+        border-top: 1px solid rgba(255,255,255,0.3); 
+        padding-top: 8px; 
+        font-weight: 600; 
+    }
+    .payslip-table { width: 100%; margin: 10px 0; border-collapse: collapse; }
+    .payslip-table td, .payslip-table th { 
+        padding: 6px 8px; 
+        border-bottom: 1px solid #ddd; 
+        text-align: left; 
+        font-size: 11px; 
+    }
+    .payslip-table th { background: #f7fafc; font-weight: 600; }
+    .payslip h4 { font-size: 12px; margin: 12px 0 6px 0; color: #333; font-weight: 600; }
+    .payslip-footer {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white; 
+        margin: 12px -20px -15px -20px;
+        padding: 10px 15px; 
+        text-align: center; 
+        font-size: 9px; 
+        line-height: 1.4;
+    }
+    .payslip-footer p { margin: 0; }
+    .net-salary-box {
+        text-align: center; 
+        margin: 12px 0; 
+        padding: 12px 15px;
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        border-radius: 8px; 
+        color: white;
+    }
+    .net-salary-box h3 { font-size: 16px; margin-bottom: 4px; font-weight: 600; }
+    .net-salary-box p { font-size: 11px; opacity: 0.95; margin: 0; }
+    .alert { padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; }
+    .alert-success { background: #c6f6d5; color: #22543d; }
+    .alert-info    { background: #bee3f8; color: #2c5282; }
+
+    @media (max-width: 767px) {
+        body { padding: 5px; }
+        .container { padding: 15px; border-radius: 10px; }
+        h1 { font-size: 1.5em; }
+        .tab { padding: 10px 12px; font-size: 13px; }
+        
+        .calc-mode {
+            display: block;
+            width: 100%;
             padding: 10px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        
+        .calc-mode label {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
             background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        h1 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.8em;
-        }
-        @media (min-width: 768px) { h1 { font-size: 2.5em; } }
-        .subtitle {
-            color: #666;
-            margin-bottom: 20px;
+            border-radius: 6px;
             font-size: 14px;
+            line-height: 1.5;
         }
-        .tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            overflow-x: auto;
-            flex-wrap: wrap;
+        
+        .calc-mode input[type="radio"] {
+            margin-right: 8px;
         }
-        .tab {
-            padding: 12px 15px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 14px;
-            color: #666;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            white-space: nowrap;
+        
+        .form-group {
+            width: 100%;
+            margin-bottom: 12px;
         }
-        @media (min-width: 768px) {
-            .tab { padding: 15px 30px; font-size: 16px; }
-        }
-        .tab.active { color: #667eea; border-bottom-color: #667eea; }
-        .tab-content { display: none; }
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .form-group { margin-bottom: 15px; }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
+        
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
             font-size: 14px;
-            transition: border 0.3s;
+            padding: 10px;
         }
-        @media (min-width: 768px) {
-            input, select, textarea {
-                padding: 12px;
-            }
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+        
         .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
             font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin: 5px;
         }
-        @media (min-width: 768px) {
-            .btn { padding: 12px 30px; font-size: 16px; }
-        }
-        .btn-primary { background: #667eea; color: white; }
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        .btn-success { background: #48bb78; color: white; }
-        .btn-danger  { background: #f56565; color: white; }
-        .btn-info    { background: #4299e1; color: white; }
-        .btn-secondary { background: #a0aec0; color: white; }
-        .card-list { display: grid; gap: 15px; margin-top: 20px; }
-        .card { border: 2px solid #eee; border-radius: 10px; padding: 15px; transition: all 0.3s; }
-        @media (min-width: 768px) {
-            .card { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        }
-        .card:hover {
-            border-color: #667eea;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .card-info h3 { color: #333; margin-bottom: 5px; font-size: 16px; }
-        .card-info p { color: #666; font-size: 13px; margin-top: 5px; }
-        .card-actions { margin-top: 10px; display: flex; gap: 5px; flex-wrap: wrap; }
-        @media (min-width: 768px) { .card-actions { margin-top: 0; } }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); }
-        .modal.active { display: block; }
-        .modal-content {
-            background-color: white;
-            margin: 2% auto; padding: 0; width: 95%; max-width: 900px;
-            border-radius: 10px; max-height: 90vh; overflow-y: auto;
-        }
-        .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 20px;
-            border-radius: 10px 10px 0 0;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .modal-close { color: white; font-size: 28px; font-weight: bold; cursor: pointer; background: none; border: none;}
-        .modal-close:hover { opacity: 0.8; }
-        .modal-body { padding: 20px; }
-        .payslip {
-            background: white; padding: 15px 20px; max-width: 100%; margin: 0 auto;
-            font-size: 11px; line-height: 1.3;
-        }
-        @media (min-width: 768px) { .payslip { padding: 20px 25px; font-size: 12px; } }
-        .payslip-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; text-align: center;
-            padding: 12px 15px; margin: -15px -20px 12px -20px; border-radius: 0;
-        }
-        @media (min-width: 768px) { .payslip-header { margin: -20px -25px 15px -25px; padding: 15px 20px; } }
-        .payslip-header h2 { margin-bottom: 4px; font-size: 16px; font-weight: 600; }
-        @media (min-width: 768px) { .payslip-header h2 { font-size: 18px; } }
-        .payslip-header p { font-size: 10px; opacity: 0.95; margin: 2px 0; line-height: 1.3; }
-        .payslip-header h3 { margin-top: 8px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; font-weight: 600; }
-        .payslip-table { width: 100%; margin: 10px 0; border-collapse: collapse; }
-        .payslip-table td, .payslip-table th { padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: left; font-size: 11px; }
-        .payslip-table th { background: #f7fafc; font-weight: 600; }
-        .payslip h4 { font-size: 12px; margin: 12px 0 6px 0; color: #333; font-weight: 600; }
-        .payslip-footer {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white; margin: 12px -20px -15px -20px;
-            padding: 10px 15px; text-align: center; font-size: 9px; line-height: 1.4;
-        }
-        @media (min-width: 768px) { .payslip-footer { margin: 15px -25px -20px -25px; padding: 12px 20px; font-size: 10px; } }
-        .payslip-footer p { margin: 0; }
-        .net-salary-box {
-            text-align: center; margin: 12px 0; padding: 12px 15px;
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            border-radius: 8px; color: white;
-        }
-        .net-salary-box h3 { font-size: 16px; margin-bottom: 4px; font-weight: 600; }
-        .net-salary-box p { font-size: 11px; opacity: 0.95; margin: 0; }
-        .alert { padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; }
-        @media (min-width: 768px) { .alert { padding: 15px; font-size: 14px; } }
-        .alert-success { background: #c6f6d5; color: #22543d; }
-        .alert-info    { background: #bee3f8; color: #2c5282; }
-        /*@media (max-width: 767px) {
-          .calc-mode {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 10px;
-            gap: 10px;
-            width: 100%;
-            box-sizing: border-box;
-          }
-          .calc-mode label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: normal;
-            width: 100%;
-            font-size: 15px;
-            padding: 5px 0;
-            word-break: break-word;
-          }
-          #generate .form-group,
-          .tab-content .form-group {
-            width: 100% !important;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-          }
-          #generate form input,
-          #generate form select,
-          #generate form textarea {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            font-size: 15px;
-          }
-          #generate form label {
-            width: 100%;
-            word-break: break-word;
-            margin-bottom: 8px;
-          }
-          #generate .btn {
-            width: 100%;
-            margin: 7px 0;
-          }
-        }*/
-        @media print {
-            body { background: white; padding: 0;}
-            .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
-            .tabs, .btn, .card-actions, .modal-header { display: none !important; }
-            .payslip { border: none; padding: 15px; margin: 0; max-width: 100%; page-break-inside: avoid; font-size: 11px; }
-            .payslip-header { padding: 12px; margin: -15px -15px 10px -15px;}
-            .payslip-footer { padding: 10px; margin: 10px -15px -15px -15px;}
-            .modal-body { padding: 0;}
-            .payslip-table td, .payslip-table th { padding: 5px 6px; font-size: 10px;}
-            .net-salary-box { margin: 10px 0; padding: 10px;}
-        }
+        
+        .card { padding: 15px; }
+        .card-actions { margin-top: 10px; }
+        .payslip { padding: 10px 15px; font-size: 10px; }
+        .payslip-header { padding: 10px; margin: -10px -15px 10px -15px; }
+        .payslip-footer { padding: 8px; margin: 10px -15px -10px -15px; }
+    }
 
-/* Complete Mobile Fix - Add before closing tag */
-@media (max-width: 767px) {
-  /* Fix container padding on mobile */
-  .container {
-    padding: 15px;
-    border-radius: 10px;
-  }
+    @media print {
+        body { background: white; padding: 0;}
+        .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
+        .tabs, .btn, .card-actions, .modal-header { display: none !important; }
+        .payslip { border: none; padding: 15px; margin: 0; max-width: 100%; page-break-inside: avoid; font-size: 11px; }
+        .payslip-header { padding: 12px; margin: -15px -15px 10px -15px;}
+        .payslip-footer { padding: 10px; margin: 10px -15px -15px -15px;}
+        .modal-body { padding: 0;}
+        .payslip-table td, .payslip-table th { padding: 5px 6px; font-size: 10px;}
+        .net-salary-box { margin: 10px 0; padding: 10px;}
+    }
+</style>
 
-  /* Fix calc-mode radio buttons - stack vertically */
-  .calc-mode {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    gap: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    background: #f7fafc;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-
-  .calc-mode label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: normal;
-    word-wrap: break-word;
-    width: 100%;
-    max-width: 100%;
-    font-size: 14px;
-    padding: 8px 5px;
-    line-height: 1.4;
-  }
-
-  .calc-mode input[type="radio"] {
-    flex-shrink: 0;
-    margin-right: 5px;
-  }
-
-  /* Force all form groups to stack properly */
-  #generate .form-group,
-  #employees .form-group,
-  #companies .form-group,
-  .tab-content .form-group {
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 12px;
-  }
-
-  /* Ensure all inputs stay within bounds */
-  #generate form input,
-  #generate form select,
-  #generate form textarea,
-  input, select, textarea {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  /* Fix labels */
-  #generate form label,
-  label {
-    width: 100%;
-    word-break: break-word;
-    margin-bottom: 5px;
-    font-size: 13px;
-  }
-
-  /* Make buttons full width on mobile */
-  #generate .btn,
-  .btn {
-    width: 100%;
-    margin: 5px 0;
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  /* Fix tabs to wrap properly */
-  .tabs {
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .tab {
-    padding: 10px 12px;
-    font-size: 13px;
-    flex: 1 1 auto;
-    min-width: fit-content;
-  }
-
-  /* Fix heading sizes */
-  h1 {
-    font-size: 1.5em;
-  }
-
-  h2 {
-    font-size: 1.3em;
-    margin-top: 15px;
-  }
-
-  h3 {
-    font-size: 1.1em;
-  }
-}
-
-    </style>
 </head>
 <body>
     <div class="container">
