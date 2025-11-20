@@ -456,6 +456,27 @@
             cursor: pointer;
         }
 
+		@media (max-width: 767px) {
+  		/* Stack the calculation mode labels vertically */
+  		.calc-mode {
+    		flex-direction: column;
+  		}
+
+  		/* Make form inputs full width and block for better stacking */
+  		#generate form .form-group {
+    		width: 100% !important;
+  		}
+
+  		/* Ensure select and input elements don't overflow */
+  		#generate form select,
+ 		#generate form input,
+  		#generate form textarea {
+    		width: 100% !important;
+    		box-sizing: border-box;
+  		}
+	}
+
+
         /* PRINT OPTIMIZATION FOR PDF */
         @media print {
             body {
