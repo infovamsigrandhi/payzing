@@ -638,11 +638,19 @@
     document.getElementById('employeeForm').addEventListener('submit', function (e) {
     e.preventDefault();
     
+    // ADD THESE LINES FIRST (before creating employee object)
+    const companyIndex = document.getElementById('empCompany').value;
+    if (companyIndex === '') {
+        alert('Please select a company for this employee');
+        return;
+    }
+    
+    // NOW REPLACE THE EMPLOYEE OBJECT WITH THIS
     const employee = {
         id: document.getElementById('empId').value,
         name: document.getElementById('empName').value,
-        companyIndex: parseInt(companyIndex),  // ADD THIS LINE
-        companyName: companies[companyIndex].name,  // ADD THIS LINE
+        companyIndex: parseInt(companyIndex),
+        companyName: companies[companyIndex].name,
         doj: document.getElementById('empDOJ').value,
         designation: document.getElementById('empDesignation').value,
         department: document.getElementById('empDepartment').value,
@@ -654,6 +662,7 @@
         bank: document.getElementById('empBank').value || ''
     };
     
+    // THE REST STAYS THE SAME
     if (editingEmployeeIndex !== null) {
         employees[editingEmployeeIndex] = employee;
         editingEmployeeIndex = null;
@@ -669,9 +678,13 @@
     displayEmployees();
 });
 
+
     function editEmployee(index) {
     editingEmployeeIndex = index;
     const emp = employees[index];
+
+    // First, make sure the company dropdown is populated
+    updateEmployeeCompanyDropdown();
     
     document.getElementById('empName').value = emp.name;
     document.getElementById('empId').value = emp.id;
