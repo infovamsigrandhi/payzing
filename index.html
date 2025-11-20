@@ -522,34 +522,60 @@
             }
         }
 
-		@media (max-width: 767px) {
-  		/* Ensure all input elements have max-width and do not overflow */
-  		#generate form input,
-  		#generate form select,
- 		 #generate form textarea {
-    		max-width: 100%;
-		    word-wrap: break-word;
-  		}
+		/* Complete Mobile Fix for Generate Payslip Tab */
+@media (max-width: 767px) {
+  /* Fix for calculation mode radio buttons */
+  .calc-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .calc-mode label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: normal;
+    word-wrap: break-word;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  
+  /* Ensure form groups stack properly */
+  #generate .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* Fix all inputs to not overflow */
+  #generate form input,
+  #generate form select,
+  #generate form textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  /* Fix labels */
+  #generate form label {
+    width: 100%;
+    word-wrap: break-word;
+    margin-bottom: 8px;
+  }
+  
+  /* Ensure buttons wrap on mobile */
+  #generate .btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
 
-  		/* Make labels and inputs stack fully vertical and full width */
-  		#generate form .form-group {
-    		display: flex;
-    		flex-direction: column;
-    		width: 100% !important;
-  		}
-
-  		/* Prevent radios wrapping weirdly, increase spacing */
-  		.calc-mode label {
-    		white-space: normal; /* allow wrapping */
-    		padding-bottom: 5px;
-  		}
-
-  		/* Adjust button container to stack buttons vertically on narrow screens */
-  		.calc-mode {
-    		flex-direction: column;
-    		align-items: flex-start;
-  		}
-	}
     </style>
 </head>
 <body>
