@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Payroll Manager</title>
+    <title>Payroll Manage</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 10px;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -23,14 +21,12 @@
             padding: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
         h1 {
             color: #667eea;
             margin-bottom: 10px;
             font-size: 1.8em;
         }
         @media (min-width: 768px) { h1 { font-size: 2.5em; } }
-
         .subtitle {
             color: #666;
             margin-bottom: 20px;
@@ -56,18 +52,10 @@
             white-space: nowrap;
         }
         @media (min-width: 768px) {
-            .tab {
-                padding: 15px 30px;
-                font-size: 16px;
-            }
+            .tab { padding: 15px 30px; font-size: 16px; }
         }
-        .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-        .tab-content {
-            display: none;
-        }
+        .tab.active { color: #667eea; border-bottom-color: #667eea; }
+        .tab-content { display: none; }
         .tab-content.active {
             display: block;
             animation: fadeIn 0.3s;
@@ -76,8 +64,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Form and Button Styles */
         .form-group { margin-bottom: 15px; }
         label {
             display: block;
@@ -113,10 +99,7 @@
             margin: 5px;
         }
         @media (min-width: 768px) {
-            .btn {
-                padding: 12px 30px;
-                font-size: 16px;
-            }
+            .btn { padding: 12px 30px; font-size: 16px; }
         }
         .btn-primary { background: #667eea; color: white; }
         .btn-primary:hover {
@@ -128,8 +111,6 @@
         .btn-danger  { background: #f56565; color: white; }
         .btn-info    { background: #4299e1; color: white; }
         .btn-secondary { background: #a0aec0; color: white; }
-
-        /* Card and Modal Styles */
         .card-list { display: grid; gap: 15px; margin-top: 20px; }
         .card { border: 2px solid #eee; border-radius: 10px; padding: 15px; transition: all 0.3s; }
         @media (min-width: 768px) {
@@ -143,13 +124,11 @@
         .card-info p { color: #666; font-size: 13px; margin-top: 5px; }
         .card-actions { margin-top: 10px; display: flex; gap: 5px; flex-wrap: wrap; }
         @media (min-width: 768px) { .card-actions { margin-top: 0; } }
-
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); }
         .modal.active { display: block; }
         .modal-content {
             background-color: white;
-            margin: 2% auto;
-            padding: 0; width: 95%; max-width: 900px;
+            margin: 2% auto; padding: 0; width: 95%; max-width: 900px;
             border-radius: 10px; max-height: 90vh; overflow-y: auto;
         }
         .modal-header {
@@ -161,14 +140,11 @@
         .modal-close { color: white; font-size: 28px; font-weight: bold; cursor: pointer; background: none; border: none;}
         .modal-close:hover { opacity: 0.8; }
         .modal-body { padding: 20px; }
-
-        /* Payslip Styles (Compact, Clean, Responsive) */
         .payslip {
             background: white; padding: 15px 20px; max-width: 100%; margin: 0 auto;
             font-size: 11px; line-height: 1.3;
         }
         @media (min-width: 768px) { .payslip { padding: 20px 25px; font-size: 12px; } }
-
         .payslip-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white; text-align: center;
@@ -179,12 +155,10 @@
         @media (min-width: 768px) { .payslip-header h2 { font-size: 18px; } }
         .payslip-header p { font-size: 10px; opacity: 0.95; margin: 2px 0; line-height: 1.3; }
         .payslip-header h3 { margin-top: 8px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; font-weight: 600; }
-
         .payslip-table { width: 100%; margin: 10px 0; border-collapse: collapse; }
         .payslip-table td, .payslip-table th { padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: left; font-size: 11px; }
         .payslip-table th { background: #f7fafc; font-weight: 600; }
         .payslip h4 { font-size: 12px; margin: 12px 0 6px 0; color: #333; font-weight: 600; }
-
         .payslip-footer {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white; margin: 12px -20px -15px -20px;
@@ -192,7 +166,6 @@
         }
         @media (min-width: 768px) { .payslip-footer { margin: 15px -25px -20px -25px; padding: 12px 20px; font-size: 10px; } }
         .payslip-footer p { margin: 0; }
-
         .net-salary-box {
             text-align: center; margin: 12px 0; padding: 12px 15px;
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
@@ -200,13 +173,10 @@
         }
         .net-salary-box h3 { font-size: 16px; margin-bottom: 4px; font-weight: 600; }
         .net-salary-box p { font-size: 11px; opacity: 0.95; margin: 0; }
-
         .alert { padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; }
         @media (min-width: 768px) { .alert { padding: 15px; font-size: 14px; } }
         .alert-success { background: #c6f6d5; color: #22543d; }
         .alert-info    { background: #bee3f8; color: #2c5282; }
-
-        /* Modern, Mobile-First Responsive Fixes for Generate Payslip Tab */
         @media (max-width: 767px) {
           .calc-mode {
             display: flex;
@@ -253,7 +223,6 @@
             margin: 7px 0;
           }
         }
-
         @media print {
             body { background: white; padding: 0;}
             .container, .modal-content { box-shadow: none; padding: 0; border-radius: 0; margin: 0; max-width: 100%;}
@@ -269,11 +238,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>💼 Vamsi's Payroll Management System</h1>
-        <p class="subtitle">Empowering business Payroll Management</p>
+        <h1>💼 Vamsi's Payroll Management</h1>
+        <p class="subtitle">Empowering business Payroll Management System</p>
         <div class="alert alert-info">
             <strong>📌 Quick Start:</strong> Add Company → Add Employees → Generate Payslips → Download PDF
         </div>
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('companies')">🏢 Companies</button>
+            <button class="tab" onclick="showTab('employees')">👥 Employees</button>
+            <button class="tab" onclick="showTab('generate')">💰 Generate Payslip</button>
+            <button class="tab" onclick="showTab('view')">📄 View Payslips</button>
+        </div>
+
         <!-- Companies Tab -->
         <div id="companies" class="tab-content active">
             <h2>Add Company</h2>
@@ -300,7 +276,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">➕ Add Company</button>
             </form>
-
             <h2 style="margin-top: 30px;">Company List</h2>
             <div id="companyList" class="card-list"></div>
         </div>
@@ -362,7 +337,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">➕ Add Employee</button>
             </form>
-
             <h2 style="margin-top: 30px;">Employee List</h2>
             <div id="employeeList" class="card-list"></div>
         </div>
@@ -397,8 +371,6 @@
                     <label>Month & Year *</label>
                     <input type="month" id="payMonth" required />
                 </div>
-
-                <!-- Auto mode fields -->
                 <div id="autoFields">
                     <div class="form-group">
                         <label>Working Days *</label>
@@ -412,16 +384,8 @@
                         <label>TDS Amount (₹)</label>
                         <input type="number" id="tdsAmount" value="0" min="0" />
                     </div>
-                    <!-- Future: Allowances as checkboxes, e.g.
-                    <label>
-                        <input type="checkbox" id="autoConveyanceCheck" onchange="toggleAllowance('autoConveyance')"/>
-                        Include Conveyance Allowance
-                    </label>
-                    <input type="number" style="display:none;" id="autoConveyanceAmount" placeholder="Conveyance Allowance (₹)" />
-                    -->
+                    <!-- Future checkboxes: e.g. Allowances -->
                 </div>
-
-                <!-- Manual mode fields -->
                 <div id="manualFields" style="display:none;">
                     <div class="form-group">
                         <label>Working Days *</label>
@@ -444,8 +408,7 @@
                         <label>DA (₹)</label>
                         <input type="number" id="manualDA" value="0" step="0.01" />
                     </div>
-                    <!-- Future: Allowances as checkboxes/fields (Conveyance, Medical etc.) -->
-
+                    <!-- Future extra allowances here -->
                     <h3 style="margin-top: 10px;">Deductions</h3>
                     <div class="form-group">
                         <label>PF (₹)</label>
@@ -919,23 +882,21 @@
 
     function numberToWords(num) {
         if (num === 0) return 'Zero';
-        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', '
-    // (continued from above)
-    Nine'];
-    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 
-    num = Math.floor(num);
+        num = Math.floor(num);
 
-    if (num < 10) return ones[num];
-    if (num < 20) return teens[num - 10];
-    if (num < 100) return tens[Math.floor(num / 10)] + ' ' + ones[num % 10];
-    if (num < 1000) return ones[Math.floor(num / 100)] + ' Hundred ' + numberToWords(num % 100);
-    if (num < 100000) return numberToWords(Math.floor(num / 1000)) + ' Thousand ' + numberToWords(num % 1000);
-    return numberToWords(Math.floor(num / 100000)) + ' Lakh ' + numberToWords(num % 100000);
+        if (num < 10) return ones[num];
+        if (num < 20) return teens[num - 10];
+        if (num < 100) return tens[Math.floor(num / 10)] + ' ' + ones[num % 10];
+        if (num < 1000) return ones[Math.floor(num / 100)] + ' Hundred ' + numberToWords(num % 100);
+        if (num < 100000) return numberToWords(Math.floor(num / 1000)) + ' Thousand ' + numberToWords(num % 1000);
+        return numberToWords(Math.floor(num / 100000)) + ' Lakh ' + numberToWords(num % 100000);
     }
 
-    // Init load: show all
+    // Init load
     displayCompanies();
     displayEmployees();
 
