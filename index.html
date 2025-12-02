@@ -1009,12 +1009,32 @@
                             <td>TDS</td>
                             <td style="text-align:right;">${slip.tds.toFixed(2)}</td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>LOP Deduction</td>
-                            <td style="text-align:right;">${slip.lopDeduction.toFixed(2)}</td>
-                        </tr>
+                        ${slip.conveyance && slip.conveyance > 0 ? `
+<tr>
+    <td>Conveyance Allowance</td>
+    <td style="text-align:right;">${slip.conveyance.toFixed(2)}</td>
+    <td></td><td></td>
+</tr>` : ''}
+${slip.medical && slip.medical > 0 ? `
+<tr>
+    <td>Medical Allowance</td>
+    <td style="text-align:right;">${slip.medical.toFixed(2)}</td>
+    <td></td><td></td>
+</tr>` : ''}
+${slip.special && slip.special > 0 ? `
+<tr>
+    <td>Special Allowance</td>
+    <td style="text-align:right;">${slip.special.toFixed(2)}</td>
+    <td></td><td></td>
+</tr>` : ''}
+
+<tr>
+    <td></td>
+    <td></td>
+    <td>LOP Deduction</td>
+    <td style="text-align:right;">${slip.lopDeduction.toFixed(2)}</td>
+</tr>
+
                         <tr style="background:#f7fafc;font-weight:bold;">
                             <td>GROSS SALARY</td>
                             <td style="text-align:right;">₹${slip.gross.toFixed(2)}</td>
