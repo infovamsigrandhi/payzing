@@ -437,6 +437,33 @@
                         <input type="number" id="tdsAmount" value="0" min="0" />
                     </div>
                     <!-- Future checkboxes: e.g. Allowances -->
+
+                        <h3 style="margin-top: 15px; color: #333;">Additional Allowances (Optional)</h3>
+    
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="autoConveyanceCheck" onchange="toggleAutoAllowance('conveyance')">
+            Include Conveyance Allowance
+        </label>
+        <input type="number" id="autoConveyance" placeholder="Amount (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="autoMedicalCheck" onchange="toggleAutoAllowance('medical')">
+            Include Medical Allowance
+        </label>
+        <input type="number" id="autoMedical" placeholder="Amount (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="autoSpecialCheck" onchange="toggleAutoAllowance('special')">
+            Include Special Allowance
+        </label>
+        <input type="number" id="autoSpecial" placeholder="Amount (₹)" style="display:none; margin-top:5px;" step="0.01" />
+    </div>
+
                 </div>
                 <div id="manualFields" style="display:none;">
                     <div class="form-group">
@@ -579,6 +606,16 @@
         input.style.display = check.checked ? 'block' : 'none';
         if (!check.checked) input.value = 0;
     }
+
+    function toggleAutoAllowance(type) {
+    const idPart = type.charAt(0).toUpperCase() + type.slice(1);
+    const check = document.getElementById('auto' + idPart + 'Check');
+    const input = document.getElementById('auto' + idPart);
+    if (!check || !input) return;
+    input.style.display = check.checked ? 'block' : 'none';
+    if (!check.checked) input.value = 0;
+}
+
 
     // Add company with logo
     document.getElementById('companyForm').addEventListener('submit', function (e) {
@@ -812,29 +849,43 @@
         const totalDays = new Date(year, monthNum, 0).getDate();
         let payslip;
         if (mode === 'auto') {
-            const workingDays = parseInt(document.getElementById('workingDays').value);
-            const paidDays = parseInt(document.getElementById('paidDays').value);
-            const tds = parseFloat(document.getElementById('tdsAmount').value) || 0;
-            const basic = emp.basicSalary;
-            const hra = basic * 0.4;
-            const da = basic * 0.2;
-            const gross = basic + hra + da;
-            const pf = emp.epf ? basic * 0.12 : 0;
-            const profTax = 200;
-            const lopDays = workingDays - paidDays;
-            const perDay = basic / totalDays;
-            const lopDeduction = lopDays * perDay;
-            const totalDeductions = pf + profTax + tds + lopDeduction;
-            const net = gross - totalDeductions;
-            payslip = {
-                company, employee: emp, month,
-                monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
-                totalDays, workingDays, paidDays, lopDays,
-                basic, hra, da, gross,
-                pf, profTax, tds, lopDeduction, totalDeductions, net,
-                generatedDate: new Date().toLocaleString()
-            };
-        } else {
+    const workingDays = parseInt(document.getElementById('workingDays').value);
+    const paidDays = parseInt(document.getElementById('paidDays').value);
+    const tds = parseFloat(document.getElementById('tdsAmount').value) || 0;
+    const basic = emp.basicSalary;
+    const hra = basic * 0.4;
+    const da = basic * 0.2;
+    
+    // New allowances for Auto mode
+    const conveyance = document.getElementById('autoConveyanceCheck').checked 
+        ? parseFloat(document.getElementById('autoConveyance').value) || 0 
+        : 0;
+    const medical = document.getElementById('autoMedicalCheck').checked 
+        ? parseFloat(document.getElementById('autoMedical').value) || 0 
+        : 0;
+    const special = document.getElementById('autoSpecialCheck').checked 
+        ? parseFloat(document.getElementById('autoSpecial').value) || 0 
+        : 0;
+    
+    const gross = basic + hra + da + conveyance + medical + special;
+    const pf = emp.epf ? basic * 0.12 : 0;
+    const profTax = 200;
+    const lopDays = workingDays - paidDays;
+    const perDay = basic / totalDays;
+    const lopDeduction = lopDays * perDay;
+    const totalDeductions = pf + profTax + tds + lopDeduction;
+    const net = gross - totalDeductions;
+    payslip = {
+        company, employee: emp, month,
+        monthName: new Date(year, monthNum - 1).toLocaleString('default', { month: 'long', year: 'numeric' }),
+        totalDays, workingDays, paidDays, lopDays,
+        basic, hra, da,
+        conveyance, medical, special,  // Add these to payslip object
+        gross,
+        pf, profTax, tds, lopDeduction, totalDeductions, net,
+        generatedDate: new Date().toLocaleString()
+    };
+} else {
     const workingDays = parseInt(document.getElementById('manualWorkingDays').value);
     const paidDays = parseInt(document.getElementById('manualPaidDays').value);
     const basic = parseFloat(document.getElementById('manualBasic').value) || 0;
