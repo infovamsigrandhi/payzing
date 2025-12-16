@@ -1352,25 +1352,37 @@ ${slip.special && slip.special > 0 ? `
             if (!currentPayslipData) return;
 
             const element = document.getElementById('currentPayslip');
+            if (!element) {
+                alert('Payslip content not found. Please try again.');
+                return;
+            }
+
             const buttons = element.parentElement.nextElementSibling;
             const downloadBtn = buttons.querySelector('button:nth-child(2)');
 
-            // Disable button during download
+            // Disable button and show loading state
             downloadBtn.disabled = true;
             downloadBtn.textContent = '⏳ Generating...';
             buttons.style.display = 'none';
+
+            // Create a clone to prevent rendering conflicts
+            const clonedElement = element.cloneNode(true);
+            clonedElement.style.position = 'absolute';
+            clonedElement.style.left = '-9999px';
+            clonedElement.style.top = '0';
+            document.body.appendChild(clonedElement);
 
             const opt = {
                 margin: [5, 5, 5, 5],
                 filename: currentPayslipData.filename.replace(/\s+/g, '_') + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false, allowTaint: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             html2pdf()
                 .set(opt)
-                .from(element)
+                .from(clonedElement)
                 .save()
                 .then(() => {
                     console.log('PDF downloaded successfully');
@@ -1383,32 +1395,26 @@ ${slip.special && slip.special > 0 ? `
                     buttons.style.display = 'flex';
                     downloadBtn.disabled = false;
                     downloadBtn.textContent = '📥 Download PDF';
-                    alert('Error generating PDF: ' + error.message + '\n\nTip: Try using "Print" option and save as PDF instead.');
-                });
-        }
-
-        function cleanupTempElements() {
-            // Find and remove any orphaned temporary divs
-            const tempElements = document.querySelectorAll('[style*="left: -9999px"]');
-            tempElements.forEach(el => {
-                if (el.parentNode) {
+                    alert('Error generating PDF: ' + (error.message || 'Unknown error') + '\n\nTry: Refresh page → Generate payslip again → Download');
+                })
+                .finally(() => {
+                    // Always cleanup the cloned element
                     try {
-                        el.parentNode.removeChild(el);
+                        if (clonedElement && clonedElement.parentNode) {
+                            document.body.removeChild(clonedElement);
+                        }
                     } catch (e) {
                         console.warn('Cleanup error:', e);
                     }
-                }
-            });
-            console.log(`Cleaned up ${tempElements.length} temporary elements`);
-        }
-
-        // Optional: Run cleanup before major operations
-        function viewPayslip(index) {
-            cleanupTempElements(); // Clean before loading new payslip
-            // ... rest of viewPayslip code
+                });
         }
 
         function quickDownloadPDF(index) {
+            if (!payslips[index]) {
+                alert('Payslip not found');
+                return;
+            }
+
             const slip = payslips[index];
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = generatePayslipHTML(slip);
@@ -1418,6 +1424,7 @@ ${slip.special && slip.special > 0 ? `
             tempDiv.style.width = '1px';
             tempDiv.style.height = '1px';
             tempDiv.style.overflow = 'hidden';
+            tempDiv.style.visibility = 'hidden';
             document.body.appendChild(tempDiv);
 
             const filename = `${slip.employee.name}_${slip.monthName}`.replace(/\s+/g, '_');
@@ -1425,16 +1432,18 @@ ${slip.special && slip.special > 0 ? `
                 margin: [5, 5, 5, 5],
                 filename: filename + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false, allowTaint: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             const payslipElement = tempDiv.querySelector('.payslip');
 
             if (!payslipElement) {
-                console.error('Payslip element not found');
-                document.body.removeChild(tempDiv);
-                alert('Error: Payslip content could not be found.');
+                console.error('Payslip element not found in generated HTML');
+                if (tempDiv && tempDiv.parentNode) {
+                    document.body.removeChild(tempDiv);
+                }
+                alert('Error: Could not generate payslip structure. Please try again.');
                 return;
             }
 
@@ -1444,19 +1453,13 @@ ${slip.special && slip.special > 0 ? `
                 .save()
                 .then(() => {
                     console.log('Quick PDF downloaded successfully');
-                    if (tempDiv && tempDiv.parentNode) {
-                        document.body.removeChild(tempDiv);
-                    }
                 })
                 .catch((error) => {
                     console.error('PDF generation error:', error);
-                    if (tempDiv && tempDiv.parentNode) {
-                        document.body.removeChild(tempDiv);
-                    }
-                    alert('Error generating PDF: ' + error.message + '\n\nPlease try viewing the payslip and downloading from there.');
+                    alert('Error generating PDF: ' + (error.message || 'Unknown error') + '\n\nTry: Use View & Download option instead.');
                 })
                 .finally(() => {
-                    // Extra safety: ensure tempDiv is removed
+                    // Always cleanup the temporary div
                     try {
                         if (tempDiv && tempDiv.parentNode) {
                             document.body.removeChild(tempDiv);
@@ -1464,6 +1467,9 @@ ${slip.special && slip.special > 0 ? `
                     } catch (e) {
                         console.warn('Could not remove tempDiv:', e);
                     }
+
+                    // Force garbage collection hint
+                    if (window.gc) window.gc();
                 });
         }
 
